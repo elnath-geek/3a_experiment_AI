@@ -1,12 +1,12 @@
 # 概要
-3Aの後期実験、人工知能演習の課題用のレポジトリです。
+3Aの後期実験、人工知能演習の課題用のレポジトリです。  
 基本的にはISTサーバーにそのままgitでcloneするために作ってます。
 
 授業で使った演習用コード(day2, day3, day4)はgitignore してあります。
 
 コラボラトリーでインストールしてたやつらはインストールしておきましょう。
 
-```
+```pip
 pip install torch
 pip install torchvision
 pip install gym
