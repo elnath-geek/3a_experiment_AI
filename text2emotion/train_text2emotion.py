@@ -85,20 +85,6 @@ def main():
 
     # Load BertForSequenceClassification, the pretrained BERT model with a single linear classification layer on top. 
     model = BertForSequenceClassification.from_pretrained("bert-base-uncased", num_labels=6).to(device)
-    
-    model_save_folder = 'model/'
-    tokenizer_save_folder = 'tokenizer/'
-
-    path_model = F'/working/{model_save_folder}'
-    path_tokenizer = F'/working/{tokenizer_save_folder}'
-
-    ## Now let's save our model and tokenizer to a directory
-    model.save_pretrained(path_model)
-    tokenizer.save_pretrained(path_tokenizer)
-
-    model_save_name = 'fineTuneModel.pt'
-    path = path_model = F'/working/{model_save_folder}/{model_save_name}'
-    torch.save(model.state_dict(),path);
 
     # Parameters:
     lr = 2e-5
@@ -169,6 +155,20 @@ def main():
             
         train_loss_set.append(avg_train_loss)
         print(F'\n\tAverage Training loss: {avg_train_loss}')
+
+        model_save_folder = 'model/'
+        tokenizer_save_folder = 'tokenizer/'
+
+        path_model = F'/working/{model_save_folder}'
+        path_tokenizer = F'/working/{tokenizer_save_folder}'
+
+        ## Now let's save our model and tokenizer to a directory
+        model.save_pretrained(path_model)
+        tokenizer.save_pretrained(path_tokenizer)
+
+        model_save_name = 'fineTuneModel.pt'
+        path = path_model = F'/working/{model_save_folder}/{model_save_name}'
+        torch.save(model.state_dict(),path)
             
         # Validation
 
