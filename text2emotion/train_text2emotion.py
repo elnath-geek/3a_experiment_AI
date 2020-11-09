@@ -71,7 +71,7 @@ def main():
     validation_masks = torch.tensor(validation_masks)
 
     # Select a batch size for training. For fine-tuning BERT on a specific task, the authors recommend a batch size of 16 or 32
-    batch_size = 4
+    batch_size = 10
 
     # Create an iterator of our data with torch DataLoader. This helps save on memory during training because, unlike a for loop, 
     # with an iterator the entire dataset does not need to be loaded into memory
@@ -159,15 +159,15 @@ def main():
         model_save_folder = 'model/'
         tokenizer_save_folder = 'tokenizer/'
 
-        path_model = F'/working/{model_save_folder}'
-        path_tokenizer = F'/working/{tokenizer_save_folder}'
+        path_model = F'working/{model_save_folder}'
+        path_tokenizer = F'working/{tokenizer_save_folder}'
 
         ## Now let's save our model and tokenizer to a directory
         model.save_pretrained(path_model)
         tokenizer.save_pretrained(path_tokenizer)
 
         model_save_name = 'fineTuneModel.pt'
-        path = path_model = F'/working/{model_save_folder}/{model_save_name}'
+        path = path_model = F'working/{model_save_folder}/{model_save_name}'
         torch.save(model.state_dict(),path)
             
         # Validation
