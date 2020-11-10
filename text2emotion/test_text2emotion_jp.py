@@ -28,8 +28,8 @@ def main():
 
     ja_sentence = [ input("input an japanese sentence : ")]
     en_sentence = [ translate(ja_sentence) ]
-    print(ja_sentence)
-    print(en_sentence)
+    print('Ja:',ja_sentence[0])
+    print('En:',en_sentence[0])
 
     # Set the maximum sequence length. The longest sequence in our training set is 47, but we'll leave room on the end anyway. 
     MAX_LEN = 256
