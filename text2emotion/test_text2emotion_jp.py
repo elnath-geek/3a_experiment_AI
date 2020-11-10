@@ -9,6 +9,7 @@ import os
 import io
 
 import requests
+
 def translate(text,source="ja",target="en"):
     url = 'https://script.google.com/macros/s/AKfycbwjPPfA-Br7ykp0wkujue6_STL3k9U8nYt1n_2XXOHXR_FpBmwo/exec'
     payload = {"text": text,"source": source,"target": target}
@@ -25,14 +26,16 @@ def main():
     print(df[['label','label_enc']].drop_duplicates(keep='first'))
 
 
-    sentence = [ translate(input("input an japanese sentence : ")) ]
-    print(sentence)
+    ja_sentence = [ input("input an japanese sentence : ")]
+    en_sentence = [ translate(ja_sentence) ]
+    print(ja_sentence)
+    print(en_sentence)
 
     # Set the maximum sequence length. The longest sequence in our training set is 47, but we'll leave room on the end anyway. 
     MAX_LEN = 256
     ## Import BERT tokenizer, that is used to convert our text into tokens that corresponds to BERT library
     tokenizer = BertTokenizer.from_pretrained('bert-base-uncased',do_lower_case=True)
-    input_id = [tokenizer.encode(sent, add_special_tokens=True,max_length=MAX_LEN, padding=True, truncation=True) for sent in sentence]
+    input_id = [tokenizer.encode(sent, add_special_tokens=True,max_length=MAX_LEN, padding=True, truncation=True) for sent in en_sentence]
     t_input_id = torch.Tensor(input_id).long()
 
     attention_mask = []
@@ -48,7 +51,8 @@ def main():
     with torch.no_grad():
         output = model(t_input_id, token_type_ids=None, attention_mask=t_attention_mask)
         output = output[0].to('cpu').numpy().flatten()
-        print(sentence)
+        print(ja_sentence)
+        print(en_sentence)
         print('anger, fear, joy, love, sadness, surprise')
         print(output)
             
