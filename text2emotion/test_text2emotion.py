@@ -42,7 +42,7 @@ def main():
         output = model(t_input_id, token_type_ids=None, attention_mask=t_attention_mask)
         output = output[0].to('cpu').numpy().flatten()
         print(sentence)
-        print('anger, feay, joy, love, sadness, surprise')
+        print('anger, fear, joy, love, sadness, surprise')
         print(output)
             
 if __name__ == "__main__":
