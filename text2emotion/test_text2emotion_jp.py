@@ -23,7 +23,7 @@ def main():
     df['label'].unique()
     labelencoder = LabelEncoder()
     df['label_enc'] = labelencoder.fit_transform(df['label'])
-    print(df[['label','label_enc']].drop_duplicates(keep='first'))
+    # print(df[['label','label_enc']].drop_duplicates(keep='first'))
 
 
     ja_sentence = [ input("input an japanese sentence : ")]
@@ -50,10 +50,10 @@ def main():
 
     with torch.no_grad():
         output = model(t_input_id, token_type_ids=None, attention_mask=t_attention_mask)
-        output = output[0].to('cpu').numpy().flatten()
-        print(ja_sentence)
-        print(en_sentence)
-        print('anger, fear, joy, love, sadness, surprise')
+        output = output[0].to('cpu').numpy()
+        print('ja_sentence', ja_sentence)
+        print('en_sentence', en_sentence)
+        print('  anger,      fear,      joy,       love,      sadness,   surprise')
         print(output)
             
 if __name__ == "__main__":
