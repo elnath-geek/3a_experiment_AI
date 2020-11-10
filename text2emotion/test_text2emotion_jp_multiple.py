@@ -28,7 +28,7 @@ def main():
 
 
     ja_sentence = input("input an japanese sentence : ")
-    en_sentence = translate(ja_sentence)
+    en_sentence = np.array(translate(ja_sentence))
     print('Ja:',ja_sentence)
     print('En:',en_sentence)
 
@@ -51,10 +51,10 @@ def main():
 
     with torch.no_grad():
         output = model(t_input_id, token_type_ids=None, attention_mask=t_attention_mask)
-        output = output[0].to('cpu').numpy().flatten()
-        print(ja_sentence)
-        print(en_sentence)
-        print('anger, fear, joy, love, sadness, surprise')
+        output = output[0].to('cpu').numpy()
+        print('ja_sentence', ja_sentence)
+        print('en_sentence', en_sentence)
+        print('  anger,      fear,      joy,       love,      sadness,   surprise')
         print(output)
             
 if __name__ == "__main__":
