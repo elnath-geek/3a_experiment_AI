@@ -51,8 +51,10 @@ def main():
     input_ids = [tokenizer.encode(sent, add_special_tokens=True,max_length=MAX_LEN,pad_to_max_length=True, truncation=True) for sent in sentences]
     labels = df.label.values
 
-    # print("Actual sentence before tokenization: ",sentences[2])
-    # print("Encoded Input from dataset: ",input_ids[2])
+    print("Actual sentence before tokenization: ",sentences[2])
+    print("Encoded Input from dataset: ",input_ids[2])
+
+    sleep(1000)
 
     ## Create attention mask
     attention_masks = []
