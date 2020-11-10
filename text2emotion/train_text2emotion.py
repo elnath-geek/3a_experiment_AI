@@ -23,7 +23,7 @@ def main():
     device = torch.device("cuda")
     torch.cuda.empty_cache()
 
-    df_train = pd.read_csv("../archive/train_middle.txt", delimiter=';', header=None, names=['sentence','label'])
+    df_train = pd.read_csv("../archive/train_small.txt", delimiter=';', header=None, names=['sentence','label'])
     df_test = pd.read_csv("../archive/test.txt", delimiter=';', header=None, names=['sentence','label'])
     df_val = pd.read_csv("../archive/val.txt", delimiter=';', header=None, names=['sentence','label'])
 
@@ -51,10 +51,8 @@ def main():
     input_ids = [tokenizer.encode(sent, add_special_tokens=True,max_length=MAX_LEN,pad_to_max_length=True, truncation=True) for sent in sentences]
     labels = df.label.values
 
-    print("Actual sentence before tokenization: ",sentences[2])
-    print("Encoded Input from dataset: ",input_ids[2])
-
-    sleep(1000)
+    # print("Actual sentence before tokenization: ",sentences[2])
+    # print("Encoded Input from dataset: ",input_ids[2])
 
     ## Create attention mask
     attention_masks = []
@@ -73,7 +71,7 @@ def main():
     validation_masks = torch.tensor(validation_masks)
 
     # Select a batch size for training. For fine-tuning BERT on a specific task, the authors recommend a batch size of 16 or 32
-    batch_size = 10
+    batch_size = 32
 
     # Create an iterator of our data with torch DataLoader. This helps save on memory during training because, unlike a for loop, 
     # with an iterator the entire dataset does not need to be loaded into memory
@@ -111,7 +109,7 @@ def main():
 
     # tnrange is a tqdm wrapper around the normal python range
     for _ in tnrange(1,epochs+1,desc='Epoch'):
-        print("<" + "="*22 + F" Epoch {_} "+ "="*22 + ">")
+        print("<" + "="*22 + "Epoch {_} " + "="*22 + ">")
         # Calculate total loss for this epoch
         batch_loss = 0
 
@@ -156,20 +154,20 @@ def main():
             learning_rate.append(param_group['lr'])
             
         train_loss_set.append(avg_train_loss)
-        print(F'\n\tAverage Training loss: {avg_train_loss}')
+        print('\n\tAverage Training loss: ',)
 
         model_save_folder = 'model/'
         tokenizer_save_folder = 'tokenizer/'
 
-        path_model = F'working/{model_save_folder}'
-        path_tokenizer = F'working/{tokenizer_save_folder}'
+        path_model = os.path.join('working/', model_save_folder)
+        path_tokenizer = os.path.join('working/', tokenizer_save_folder)
 
         ## Now let's save our model and tokenizer to a directory
         model.save_pretrained(path_model)
         tokenizer.save_pretrained(path_tokenizer)
 
         model_save_name = 'fineTuneModel.pt'
-        path = path_model = F'working/{model_save_folder}/{model_save_name}'
+        path = path_model = os.path.join(path_model, model_save_name)
         torch.save(model.state_dict(),path)
             
         # Validation
@@ -207,8 +205,8 @@ def main():
             eval_mcc_accuracy += tmp_eval_mcc_accuracy
             nb_eval_steps += 1
 
-        print(F'\n\tValidation Accuracy: {eval_accuracy/nb_eval_steps}')
-        print(F'\n\tValidation MCC Accuracy: {eval_mcc_accuracy/nb_eval_steps}')
+        print('\n\tValidation Accuracy: ', eval_accuracy/nb_eval_steps)
+        print('\n\tValidation MCC Accuracy: ', eval_mcc_accuracy/nb_eval_steps)
 
 if __name__ == "__main__":
     main()
