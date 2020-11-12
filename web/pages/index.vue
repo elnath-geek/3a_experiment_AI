@@ -85,9 +85,11 @@
 
 <script>
 import Logo from '~/components/Logo.vue'
+import PythonShell from 'python-shell'
+// import fs from 'child_process'
 
 export default {
-  components: {
+  Components: {
     Logo,
   },
   data() {
@@ -148,6 +150,8 @@ export default {
   methods: {
     submit(){
       console.log(this.text)
+      // var {PythonShell} = require('python-shell');
+
     }
   }
 }
