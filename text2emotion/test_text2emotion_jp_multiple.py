@@ -9,12 +9,13 @@ import os
 import io
 
 import requests
+import re
 
 def translate(text,source="ja",target="en"):
     url = 'https://script.google.com/macros/s/AKfycbwjPPfA-Br7ykp0wkujue6_STL3k9U8nYt1n_2XXOHXR_FpBmwo/exec'
     payload = {"text": text,"source": source,"target": target}
     r = requests.get(url, params=payload).json()['text']
-    rlist=r.split('. ')
+    rlist=re.findall(".*?[.!?]", r)
     return rlist
 
 def main():
@@ -29,7 +30,7 @@ def main():
 
     ja_sentence = input("input an japanese sentence : ")
     en_sentence = np.array(translate(ja_sentence))
-    print('Ja:',ja_sentence)
+    print('Ja:',np.array(re.findall(".*?[。！？!?]", ja_sentence)))
     print('En:',en_sentence)
 
     # Set the maximum sequence length. The longest sequence in our training set is 47, but we'll leave room on the end anyway. 
