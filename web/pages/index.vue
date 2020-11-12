@@ -1,18 +1,27 @@
 <template>
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
-      <v-container v-for="talk in talk_datum" :key="talk" >
+      <v-container v-for="talk in talk_datum" :key="talk.sender">
         <v-card>
           <v-card-subtitle>
             <v-icon role="img">mdi-account</v-icon>
             {{ talk.sender }}
           </v-card-subtitle>
           <v-card-text>
-            <span v-for="message in talk.messages" :key="message" :style="message.style">
+            <span v-for="message in talk.messages" :key="message.text" :style="message.style">
               {{message.text}}
             </span>
           </v-card-text>
         </v-card>
+      </v-container>
+      <v-container>
+        <v-textarea
+          auto-grow
+          rows="1"
+          v-model="text"
+          placeholder="ここに入力してください"
+          @keydown.enter.ctrl="submit"></v-textarea>
+        {{text}}
       </v-container>
     </v-col>
   </v-row>
@@ -20,15 +29,14 @@
 
 <script>
 import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
 
 export default {
   components: {
     Logo,
-    VuetifyLogo
   },
   data() {
     return {
+      text: '',
       talk_datum: [
         {
           sender: 'Alice',
@@ -80,6 +88,17 @@ export default {
         }
       ]
     }
+  },
+  methods: {
+    submit(){
+      console.log(this.text)
+    }
   }
 }
 </script>
+<style lang="scss" scoped>
+.textarea{
+  position: fixed;
+  bottom: 20px;
+}
+</style>
