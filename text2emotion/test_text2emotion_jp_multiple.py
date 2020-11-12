@@ -24,7 +24,7 @@ def main():
     df['label'].unique()
     labelencoder = LabelEncoder()
     df['label_enc'] = labelencoder.fit_transform(df['label'])
-    print(df[['label','label_enc']].drop_duplicates(keep='first'))
+    # print(df[['label','label_enc']].drop_duplicates(keep='first'))
 
 
     ja_sentence = input("input an japanese sentence : ")
@@ -36,7 +36,8 @@ def main():
     MAX_LEN = 256
     ## Import BERT tokenizer, that is used to convert our text into tokens that corresponds to BERT library
     tokenizer = BertTokenizer.from_pretrained('bert-base-uncased',do_lower_case=True)
-    input_id = [tokenizer.encode(sent, add_special_tokens=True,max_length=MAX_LEN, padding=True, truncation=True) for sent in en_sentence]
+    input_id = [tokenizer.encode(sent, add_special_tokens=True,max_length=MAX_LEN, pad_to_max_length=True, truncation=True) for sent in en_sentence]
+    print(input_id)
     t_input_id = torch.Tensor(input_id).long()
 
     attention_mask = []
@@ -47,7 +48,7 @@ def main():
     model = BertForSequenceClassification.from_pretrained("bert-base-uncased", num_labels=6).to(device)
     model.zero_grad()
     model.eval()
-    model.load_state_dict(torch.load("working_160/model/fineTuneModel.pt"))
+    model.load_state_dict(torch.load("working_16000/model/fineTuneModel.pt"))
 
     with torch.no_grad():
         output = model(t_input_id, token_type_ids=None, attention_mask=t_attention_mask)
