@@ -1,14 +1,19 @@
 <template>
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
-      <v-card v-for="talk in talk_datum" :key="talk">
-        <v-card-subtitle>{{ talk.sender }}</v-card-subtitle>
-        <v-card-text>
-          <span v-for="message in talk.messages" :key="message" :style="message.style">
-            {{message.text}}
-          </span>
-        </v-card-text>
-      </v-card>
+      <v-container v-for="talk in talk_datum" :key="talk" >
+        <v-card>
+          <v-card-subtitle>
+            <v-icon role="img">mdi-account</v-icon>
+            {{ talk.sender }}
+          </v-card-subtitle>
+          <v-card-text>
+            <span v-for="message in talk.messages" :key="message" :style="message.style">
+              {{message.text}}
+            </span>
+          </v-card-text>
+        </v-card>
+      </v-container>
     </v-col>
   </v-row>
 </template>
@@ -34,18 +39,20 @@ export default {
               vector: [1,1,1,1,1,1], // 6次元ベクトル
               style: {
                 // font: 'default',
-                font_size: '14px',
+                fontSize: '14px',
                 color: 'black',
               },
+            },
+            {
               text: 'ここまでが1人の発言。',
               vector: [1,1,1,1,1,1], // 6次元ベクトル
               style: {
                 // font: 'default',
-                font_size: '20px',
+                fontSize: '20px',
                 color: 'blue',
               },
-            }
-          ]
+            },
+          ],
         },
         {
           sender: 'Bob',
@@ -59,11 +66,13 @@ export default {
                 fontSize: '14px',
                 color: 'red',
               },
+            },
+            {
               text: 'サンプルデータだけでめんどい。',
               vector: [1,1,1,1,1,1], // 6次元ベクトル
               style: {
                 // font: 'default',
-                font_size: '14px',
+                fontSize: '14px',
                 color: 'black',
               },
             }
