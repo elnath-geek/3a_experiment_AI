@@ -26,8 +26,12 @@ def suggest(emotions, k=3):
     index = np.array(dist).argsort()[::-1][:k]
     stamps = []
     for i in index:
-      stamps.append(stamp.iat[i,0])
+      stamps.append((stamp.iat[i,0], dist[i]))
     return stamps
+
+def normalize(o):
+    o = np.clip(o, -3.0, 6.0)
+    return o/6.0 if o>0 else o/3.0
 
 def main():
     device = torch.device("cpu")
@@ -68,9 +72,11 @@ def main():
         print('ja_sentence', ja_sentence)
         print('en_sentence', en_sentence)
         print('  anger,      fear,      joy,       love,      sadness,   surprise')
+        output = np.vectorize(normalize)(np.array(output))
         print(output)
-        imagenames = suggest(output[0])
-        for im in imagenames: print(im)
+        for o in output:
+            print(*suggest(o), sep="\n")
+        #print(*suggest(np.mean(output, axis=0)), sep="\n")
             
 if __name__ == "__main__":
     main()
