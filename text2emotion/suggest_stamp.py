@@ -5,7 +5,7 @@ def suggest(emotions, k=3):
     stamp = pd.read_csv("Stamp.csv")
     dist = []
     for _, e in stamp.iterrows():
-      dist.append(np.dot(e[1:], emotions) / (np.linalg.norm(e[1:]) * np.linalg.norm(emotions)))
+      dist.append(np.dot(e[1:], np.array(emotions)) / (np.linalg.norm(e[1:]) * np.linalg.norm(emotions)))
     index = np.array(dist).argsort()[::-1][:k]
     stamps = []
     for i in index:
