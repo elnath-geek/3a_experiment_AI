@@ -30,9 +30,10 @@
 <script>
 import Logo from '~/components/Logo.vue'
 import PythonShell from 'python-shell'
+// import fs from 'child_process'
 
 export default {
-  components: {
+  Components: {
     Logo,
   },
   data() {
@@ -93,11 +94,8 @@ export default {
   methods: {
     submit(){
       console.log(this.text)
-      // const pyshell = new PythonShell('@/src/text2emotion.py');
-      // pyshell.send(this.text);
-      // pyshell.on('ret', (err)=>{
-      //   console.log(ret);
-      // })
+      // var {PythonShell} = require('python-shell');
+
     }
   }
 }
