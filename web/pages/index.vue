@@ -29,6 +29,7 @@
 
 <script>
 import Logo from '~/components/Logo.vue'
+import PythonShell from 'python-shell'
 
 export default {
   components: {
@@ -92,6 +93,11 @@ export default {
   methods: {
     submit(){
       console.log(this.text)
+      // const pyshell = new PythonShell('@/src/text2emotion.py');
+      // pyshell.send(this.text);
+      // pyshell.on('ret', (err)=>{
+      //   console.log(ret);
+      // })
     }
   }
 }

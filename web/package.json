@@ -9,8 +9,11 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
+    "child_process": "^1.0.2",
     "core-js": "^3.6.5",
-    "nuxt": "^2.14.6"
+    "fs": "0.0.1-security",
+    "nuxt": "^2.14.6",
+    "python-shell": "^2.0.2"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.11.2"
