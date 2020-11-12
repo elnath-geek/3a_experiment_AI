@@ -23,7 +23,7 @@ def main():
     device = torch.device("cuda")
     torch.cuda.empty_cache()
 
-    df_train = pd.read_csv("../archive/train_small.txt", delimiter=';', header=None, names=['sentence','label'])
+    df_train = pd.read_csv("../archive/train.txt", delimiter=';', header=None, names=['sentence','label'])
     df_test = pd.read_csv("../archive/test.txt", delimiter=';', header=None, names=['sentence','label'])
     df_val = pd.read_csv("../archive/val.txt", delimiter=';', header=None, names=['sentence','label'])
 
