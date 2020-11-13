@@ -5,34 +5,29 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import LabelEncoder
 
-import os
-import io
-
+import os, io, sys, codecs
+# sys.stdin = codecs.getreader('utf-8')
 import requests
 import re
 
-def translate(text,source="ja",target="en"):
+
+
+def translate(text, source="ja",target="en"):
     url = 'https://script.google.com/macros/s/AKfycbwjPPfA-Br7ykp0wkujue6_STL3k9U8nYt1n_2XXOHXR_FpBmwo/exec'
-    payload = {"text": text,"source": source,"target": target}
+    payload = {"text": text, "source": source, "target": target}
     r = requests.get(url, params=payload).json()['text']
     rlist=re.findall(".*?[.!?]", r)
     return rlist
 
 def main():
     device = torch.device("cpu")
-
-    df = pd.read_csv("../archive/train_small.txt", delimiter=';', header=None, names=['sentence','label'])
-    df['label'].unique()
-    labelencoder = LabelEncoder()
-    df['label_enc'] = labelencoder.fit_transform(df['label'])
-    # print(df[['label','label_enc']].drop_duplicates(keep='first'))
-
-
-    ja_sentence = input("input an japanese sentence : ")
+    ja_sentence = sys.stdin.readline()
+    # print(ja_sentence)
+    print(int(ja_sentence))
     ja_split_sentence = np.array(re.findall(".*?[。！？!?]", ja_sentence))
+    # ja_split_sentence = np.array(ja_sentence)
     en_sentence = np.array(translate(ja_sentence))
-    # print('Ja:', ja_split_sentence)
-    # print('En:',en_sentence)
+    # en_sentence = ['i am teacher']
 
     # Set the maximum sequence length. The longest sequence in our training set is 47, but we'll leave room on the end anyway.
     MAX_LEN = 256
@@ -50,15 +45,15 @@ def main():
     model = BertForSequenceClassification.from_pretrained("bert-base-uncased", num_labels=6).to(device)
     model.zero_grad()
     model.eval()
-    model.load_state_dict(torch.load("working_16000/model/fineTuneModel.pt"))
+    model.load_state_dict(torch.load("./src/fineTuneModel.pt"))
 
     with torch.no_grad():
         output = model(t_input_id, token_type_ids=None, attention_mask=t_attention_mask)
         output = output[0].to('cpu').numpy()
-        print('ja_sentence', ja_split_sentence)
-        print('en_sentence', en_sentence)
-        print('  anger,      fear,      joy,       love,      sadness,   surprise')
-        print(output)
+        # print('ja_sentence', ja_split_sentence)
+        # print('en_sentence', en_sentence)
+        # print('  anger,      fear,      joy,       love,      sadness,   surprise')
+        print(ja_split_sentence, output)
 
 if __name__ == "__main__":
     main()

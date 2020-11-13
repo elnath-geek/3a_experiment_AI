@@ -29,6 +29,7 @@ def main():
 
 
     ja_sentence = input("input an japanese sentence : ")
+    print(ja_sentence)
     en_sentence = np.array(translate(ja_sentence))
     print('Ja:',np.array(re.findall(".*?[。！？!?]", ja_sentence)))
     print('En:',en_sentence)
