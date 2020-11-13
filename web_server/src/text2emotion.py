@@ -21,13 +21,11 @@ def translate(text, source="ja",target="en"):
 
 def main():
     device = torch.device("cpu")
-    ja_sentence = sys.stdin.readline()
-    # print(ja_sentence)
-    print(int(ja_sentence))
-    ja_split_sentence = np.array(re.findall(".*?[。！？!?]", ja_sentence))
+    # ja_sentence = sys.stdin.readline()
+    # ja_split_sentence = np.array(re.findall(".*?[。！？!?]", ja_sentence))
     # ja_split_sentence = np.array(ja_sentence)
-    en_sentence = np.array(translate(ja_sentence))
-    # en_sentence = ['i am teacher']
+    # en_sentence = np.array(translate(ja_sentence))
+    en_sentence = np.array([sys.stdin.readline()])
 
     # Set the maximum sequence length. The longest sequence in our training set is 47, but we'll leave room on the end anyway.
     MAX_LEN = 256
@@ -53,7 +51,8 @@ def main():
         # print('ja_sentence', ja_split_sentence)
         # print('en_sentence', en_sentence)
         # print('  anger,      fear,      joy,       love,      sadness,   surprise')
-        print(ja_split_sentence, output)
+        # print(ja_split_sentence, output)
+        print(output)
 
 if __name__ == "__main__":
     main()

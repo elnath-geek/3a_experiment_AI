@@ -95,7 +95,7 @@ export default {
       console.log(this.text)
 
       axios.post('http://localhost:3001/api/main', {
-        text: escape(this.text),
+        text: this.text,
       })
       .then((res) =>{
         console.log(res.data)
