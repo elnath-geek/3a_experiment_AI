@@ -85,8 +85,7 @@
 
 <script>
 import Logo from '~/components/Logo.vue'
-import PythonShell from 'python-shell'
-// import fs from 'child_process'
+import axios from 'axios'
 
 export default {
   Components: {
@@ -150,8 +149,16 @@ export default {
   methods: {
     submit(){
       console.log(this.text)
-      // var {PythonShell} = require('python-shell');
 
+      axios.post('http://localhost:3001/api/main', {
+        text: this.text,
+      })
+      .then((res) =>{
+        console.log(res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
     }
   }
 }
