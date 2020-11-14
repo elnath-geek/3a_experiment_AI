@@ -38,10 +38,6 @@ def main():
 
     ## create label and sentence list
     sentences = df.sentence.values
-    # print(sentences)
-
-    #check distribution of data based on labels
-    # print("Distribution of data based on labels: ",df.label.value_counts())
 
     # Set the maximum sequence length. The longest sequence in our training set is 47, but we'll leave room on the end anyway. 
     # In the original paper, the authors used a length of 512.
@@ -51,9 +47,6 @@ def main():
     tokenizer = BertTokenizer.from_pretrained('bert-base-uncased',do_lower_case=True)
     input_ids = [tokenizer.encode(sent, add_special_tokens=True,max_length=MAX_LEN,pad_to_max_length=True, truncation=True) for sent in sentences]
     labels = df.label.values
-
-    print("Actual sentence before tokenization: ",sentences[2])
-    print("Encoded Input from dataset: ",input_ids[2])
 
     ## Create attention mask
     attention_masks = []

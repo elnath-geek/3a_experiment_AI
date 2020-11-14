@@ -9,14 +9,17 @@
           </v-card-subtitle>
           <v-card-text class="textarea">
             <span v-for="message in talk.messages" :key="message.text" :style="message.style">
-              {{message.text}}
-              <!-- {{message.vector}} -->
+              {{message.text}}<br>
+              {{message.vector}}<br>
             </span>
-            <br>
+            [anger, fear, joy, love, sadness, surprise]<br>
           </v-card-text>
         </v-card>
       </v-container>
       <v-container>
+        <div>
+          <img :src="require('@/assets/image/mark_face_angry.png')" alt="">
+        </div>
         <v-textarea
           auto-grow
           rows="1"
@@ -46,21 +49,23 @@ export default {
           background_color: 'default',
           messages: [
             {
-              text: 'ここは日本語の文章。',
-              vector: [1,1,1,1,1,1], // 6次元ベクトル
+              text: '好きだよ！',
+              vector: [ -2.0011816, -2.915759, 3.953413, 4.5045347, -1.828981, -3.1332562 ], // 6次元ベクトル
               style: {
-                // font: 'default',
-                fontSize: '14px',
+                fontFamily: '',
+                fontSize: '16px',
                 color: 'black',
+                background: 'linear-gradient(transparent 90%, #FC74EF 90%)', // love
               },
             },
             {
-              text: 'ここまでが1人の発言。',
-              vector: [1,1,1,1,1,1], // 6次元ベクトル
+              text: 'なんていうと思ったか！',
+              vector: [6.4704595,0.056090813,-0.72478443,-2.3732667,-0.2728797,-1.33733], // 6次元ベクトル
               style: {
-                // font: 'default',
-                fontSize: '20px',
-                color: 'blue',
+                fontFamily: '',
+                fontSize: '18px',
+                color: 'black',
+                background: 'linear-gradient(transparent 90%, #E0422D 90%)', // anger
               },
             },
           ],
@@ -71,20 +76,22 @@ export default {
           messages: [
             {
               text: '１文ごとにstyleの設定が必要。',
-              vector: [1,1,1,1,1,1], // 6次元ベクトル
+              vector: [4.5369635,1.2375491,-0.29684916,-2.321845,0.5516241,-2.8189578,7.7515764], // 6次元ベクトル
               style: {
-                // font: 'default',
-                fontSize: '14px',
-                color: 'red',
+                fontFamily: '',
+                fontSize: '16px',
+                color: 'black',
+                background: 'linear-gradient(transparent 90%, #E0422D 90%)', // anger
               },
             },
             {
               text: 'サンプルデータだけでめんどい。',
-              vector: [1,1,1,1,1,1], // 6次元ベクトル
+              vector: [7.751577, -0.7661498, -1.3227923, -1.7455888, -1.062233, -1.2605869], // 6次元ベクトル
               style: {
-                // font: 'default',
-                fontSize: '14px',
+                fontFamily: '',
+                fontSize: '20px',
                 color: 'black',
+                background: 'linear-gradient(transparent 90%, #E0422D 90%)', // anger
               },
             }
           ]
@@ -106,6 +113,7 @@ export default {
       .catch((err) => {
         console.log(err)
       })
+      this.text = ''
     }
   }
 }

@@ -14,7 +14,7 @@ app.use(cors())
 const port = process.env.PORT || 3001; // port番号を指定
 
 const background_style = [
-  'linear-gradient(transparent 90%, #DB5A32 90%)', // anger
+  'linear-gradient(transparent 90%, #E0422D 90%)', // anger
   'linear-gradient(transparent 90%, #CE7FFA 90%)', // fear
   'linear-gradient(transparent 90%, #F4EA5B 90%)', // joy
   'linear-gradient(transparent 90%, #FC74EF 90%)', // love
