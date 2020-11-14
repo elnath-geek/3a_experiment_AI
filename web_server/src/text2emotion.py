@@ -63,7 +63,8 @@ def main():
         print(','.join( map(str, output.flatten()) ))
         print('vec_end')
         for o in output:
-            print(*suggest(o), sep="\n")
+            print(*suggest(o))
+            print(" ")
         print('end')
 
 if __name__ == "__main__":

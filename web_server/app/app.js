@@ -68,14 +68,15 @@ app.post('/api/main',function(req,res){
     }
 
     const pyshell = new PythonShell('./src/text2emotion.py');
-    let receive_buffer = ''
+    let receive_buffer = ""
     pyshell.send(en_sentence);
     pyshell.on('message', (python_out)=>{
-      // console.log(python_out);
+      console.log(python_out);
       if( python_out == 'end' ){
-
+        image_array = receive_buffer.split(" ")
+        console.log(image_array)
         res.status(200).send(return_data)
-      } else if('vec_end') {
+      } else if( python_out == 'vec_end') {
         vector = receive_buffer.split(',').map(Number)
         console.log(vector)
         for(let i=0; i<ja_split_sentence.length; i++) {
@@ -85,6 +86,7 @@ app.post('/api/main',function(req,res){
             style: styleGen(vector.slice(i*6, (i+1)*6)),
           })
         }
+        receive_buffer = ''
       } else {
         receive_buffer += python_out
       }

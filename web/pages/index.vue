@@ -22,7 +22,7 @@
           rows="1"
           v-model="text"
           placeholder="ここに入力してください"
-          @keydown.enter="submit"></v-textarea>
+          @keydown.enter.ctrl="submit"></v-textarea>
         <!-- {{text}} -->
       </v-container>
     </v-col>
