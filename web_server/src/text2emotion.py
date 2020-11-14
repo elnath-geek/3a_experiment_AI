@@ -19,19 +19,30 @@ def translate(text, source="ja",target="en"):
     rlist=re.findall(".*?[.!?]", r)
     return rlist
 
+def suggest(emotions, k=3):
+    stamp = pd.read_csv("src/Stamp.csv")
+    dist = []
+    for _, e in stamp.iterrows():
+      dist.append(np.dot(e[1:], np.array(emotions)) / (np.linalg.norm(e[1:]) * np.linalg.norm(emotions)))
+    index = np.array(dist).argsort()[::-1][:k]
+    stamps = []
+    for i in index:
+      stamps.append(stamp.iat[i,0])
+      #stamps.append((stamp.iat[i,0], dist[i]))
+    return stamps
+
 def main():
     device = torch.device("cpu")
-    # ja_sentence = sys.stdin.readline()
-    # ja_split_sentence = np.array(re.findall(".*?[。！？!?]", ja_sentence))
-    # ja_split_sentence = np.array(ja_sentence)
-    # en_sentence = np.array(translate(ja_sentence))
-    en_sentence = np.array([sys.stdin.readline()])
+    en_sentence = sys.stdin.readline()
+    en_split_sentence = np.array(re.findall(".*?[.!?]", en_sentence))
+    # print("python-shell", type(en_split_sentence))
+    # print("python-shell", en_split_sentence)
 
     # Set the maximum sequence length. The longest sequence in our training set is 47, but we'll leave room on the end anyway.
     MAX_LEN = 256
     ## Import BERT tokenizer, that is used to convert our text into tokens that corresponds to BERT library
     tokenizer = BertTokenizer.from_pretrained('bert-base-uncased',do_lower_case=True)
-    input_id = [tokenizer.encode(sent, add_special_tokens=True,max_length=MAX_LEN, pad_to_max_length=True, truncation=True) for sent in en_sentence]
+    input_id = [tokenizer.encode(sent, add_special_tokens=True,max_length=MAX_LEN, pad_to_max_length=True, truncation=True) for sent in en_split_sentence]
     # print(input_id)
     t_input_id = torch.Tensor(input_id).long()
 
@@ -48,11 +59,13 @@ def main():
     with torch.no_grad():
         output = model(t_input_id, token_type_ids=None, attention_mask=t_attention_mask)
         output = output[0].to('cpu').numpy()
-        # print('ja_sentence', ja_split_sentence)
-        # print('en_sentence', en_sentence)
         # print('  anger,      fear,      joy,       love,      sadness,   surprise')
-        # print(ja_split_sentence, output)
-        print(output)
+        print(','.join( map(str, output.flatten()) ))
+        print('vec_end')
+        for o in output:
+            print(*suggest(o))
+            print(" ")
+        print('end')
 
 if __name__ == "__main__":
     main()
