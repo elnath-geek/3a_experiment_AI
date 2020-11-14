@@ -7,10 +7,12 @@
             <v-icon role="img">mdi-account</v-icon>
             {{ talk.sender }}
           </v-card-subtitle>
-          <v-card-text>
+          <v-card-text class="textarea">
             <span v-for="message in talk.messages" :key="message.text" :style="message.style">
               {{message.text}}
+              <!-- {{message.vector}} -->
             </span>
+            <br>
           </v-card-text>
         </v-card>
       </v-container>
@@ -20,8 +22,8 @@
           rows="1"
           v-model="text"
           placeholder="ここに入力してください"
-          @keydown.enter.ctrl="submit"></v-textarea>
-        {{text}}
+          @keydown.enter="submit"></v-textarea>
+        <!-- {{text}} -->
       </v-container>
     </v-col>
   </v-row>
@@ -99,6 +101,7 @@ export default {
       })
       .then((res) =>{
         console.log(res.data)
+        this.talk_datum.push(res.data)
       })
       .catch((err) => {
         console.log(err)
@@ -109,7 +112,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .textarea{
-  position: fixed;
-  bottom: 20px;
+  line-height: 1.5;
 }
 </style>
