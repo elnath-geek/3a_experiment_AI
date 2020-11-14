@@ -19,7 +19,7 @@
               <table>
                     <tr>
                         <td>
-                            <input id="inp" type="text" name="name" class="newMessage form-control" autocomplete="nope" >
+                            <input id="inp" type="text" name="name" class="newMessage form-control" autocomplete="nope" @keydown.enter.ctrl="pushMessage()">
                         </td>
                         <td width=80px>
                             <button type="submit" class="button" v-on:click="pushMessage()" >送信</button>
@@ -44,12 +44,10 @@ export default {
     },
     methods:{
         render(getJsonData){
-          // 一旦全部の会話を消去してから再描画する（暫定：力技）
           console.log('render')
           document.getElementById('area').innerHTML = '';
-          // 受信したjsonデータを自分と相手に分けて描画する
           for(var i in getJsonData){
-              if(getJsonData[i].fromAddress==this.myid){
+              if(getJsonData[i].sender==this.myid){
                   var cts ="";
 
                   cts =  "<div class='myText'>";
@@ -60,24 +58,21 @@ export default {
               } else {
                   var cts ="";
                   cts =  "<div class='flText'>"; 
-                  // 友達IDからアイコン画像ファイル名を生成している
                   cts += "  <figure><img src='images/" + this.f1id + ".jpg'/></figure>";
                   cts += "  <div class='flText-text'>";
-                  cts += "    <div class='text'>"+ getJsonData[i].message + "</div>";
+                  cts += "    <div class='text'><span style='color:" + getJsonData[i].style.color + ";font-size:"+getJsonData[i].style.fontSize+";background:"+getJsonData[i].style.background+";'>"+ getJsonData[i].message + "</span></div>";
                   cts += "    <div class='date'>"+ getJsonData[i].timeStamp + "</div>";
                   cts += "  </div>";
                   cts += "</div>";
                   $('.contents').append(cts);
               }
           }
-          // 描画が終わったら画面下までスクロールさせる
           var obj = document.getElementById('area');
           obj.scrollTop = document.getElementById('area').scrollHeight;
 
         },
 
         getMessages(){   
-      // getを行いjsonデータを受領して描画関数に渡す
           console.log('getMessages')
           fetch('/api/messages')
               .then((data) => data.json())
@@ -88,7 +83,6 @@ export default {
         },
         
         pushMessage(){
-      // 入力データをサーバーにポストする
           console.log('pushMessage')
           var text = $(".newMessage").val();
           if (text !=''){
@@ -99,7 +93,6 @@ export default {
               })
               .then(() => {
                   this.getMessages();
-                  // 入力領域をクリアする
                   document.getElementById('inp').value="";
               });
               

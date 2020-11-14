@@ -1,9 +1,7 @@
 const express = require('express')
 const app = express()
-var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var ejs = require("ejs");
-
 app.engine('ejs',ejs.renderFile);
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
@@ -12,60 +10,43 @@ app.use(bodyParser.json());
 var myID = '01';
 var f1ID = '02';
 
-var chatCollection = myID + f1ID;
-
-//  MongoDBに接続
-mongoose.connect('mongodb://localhost/mydb1');
-
 //会話格納用（スタンプや画像はまだ）
-var Chats = mongoose.model(chatCollection, {
-    fromAddress : String,
-    toAddress : String,
-    message : String,
-    timeStamp :String
-});
+var Chats = [];
 
 //  最初の挨拶
-Chats.create({
-    fromAddress : f1ID,
-    toAddress : myID,
-    message : 'こんにちは',
+Chats.push({
+    sender : f1ID,
+    message : 'やあ！',
+    vector: [ -2.0011816, -2.915759, 3.953413, 4.5045347, -1.828981, -3.1332562 ], // 6次元ベクトル
+    style: {
+        fontFamily: '',
+        fontSize: '20px',
+        color: 'red',
+        background: 'linear-gradient(transparent 90%, #FC74EF 90%)', // love
+    },
     timeStamp : getDateTime()
     });
 
-// 直近の会話を比較用に保存
-var resentMsg = "---";
-var query = { "fromAddress": "01" };
-    Chats.find(query,{},{sort:{_id: -1},limit:1}, function(err, data){
-        if(err){
-            console.log(err);
-        }
-        if(!data){
-            if (data[0].timeStamp !==''){
-                resentMsg =data[0].timeStamp + data[0].message;
-            }
-        }
-    });
 
 // クライアントからgetされると会話全件をjsonで返す
 app.get('/messages', (req, res) => {
-    Chats.find()
-            .then((messages) => {
-            res.json(messages);
-        })
-        .catch((err) => {
-            res.send(err);
-        })
+    res.json(Chats);
 });
 
 // 会話内容がポストされれば、それを登録する
 app.post('/messages', (req, res) => {
     var postData = req.body;
 
-    Chats.create({
-            fromAddress : myID,
-            toAddress : f1ID,
+    Chats.push({
+            sender : myID,
             message : postData.mess,
+            vector: [ -2.0011816, -2.915759, 3.953413, 4.5045347, -1.828981, -3.1332562 ], // 6次元ベクトル
+            style: {
+                fontFamily: '',
+                fontSize: '20px',
+                color: 'black',
+                background: 'linear-gradient(transparent 90%, #FC74EF 90%)',
+            },
             timeStamp : getDateTime()
         })
         .then((postData) => {
@@ -77,27 +58,28 @@ app.post('/messages', (req, res) => {
 });
 
 // （暫定）1秒ごとに新しいメッセージを検索する
+var chatlen = 0
 const timer = setInterval(function(){
-    var query = { };
-    Chats.find(query,{},{sort:{_id: -1},limit:1}, function(err, data){
-        if(err){
-            console.log(err);
+    if(Chats.length>chatlen){
+        chatlen = Chats.length
+        if(Chats[chatlen-1].sender == '01'){
+            msgFooking(Chats[chatlen-1].message);
         }
-        if ( data[0].fromAddress == '01') {
-            if ( resentMsg != data[0].timeStamp + data[0].message) {
-                resentMsg = data[0].timeStamp + data[0].message;
-                msgFooking(data[0].message);
-            }
-        }
-    });
+    }
 },1000);
 
 // （暫定）ECHOさんの処理
 function msgFooking(msg){
-    Chats.create({
-        fromAddress : f1ID,
-        toAddress : myID,
-        message : msg + "ですね",
+    Chats.push({
+        sender : f1ID,
+        message : msg + "だね。",
+        vector: [ -2.0011816, -2.915759, 3.953413, 4.5045347, -1.828981, -3.1332562 ], // 6次元ベクトル
+        style: {
+            fontFamily: '',
+            fontSize: '20px',
+            color: 'black',
+            background: 'linear-gradient(transparent 90%, #FC74EF 90%)', // love
+        },
         timeStamp : getDateTime()
     });
 }
