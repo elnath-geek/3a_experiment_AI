@@ -3,9 +3,10 @@ const app = express()
 var bodyParser = require('body-parser');
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
+var fs = require('fs');
 
 //ID
-var user1 = '01';
+var user1 = 'Alice';
 var user2 = 'Bot';
 
 var Chats = [];
@@ -17,7 +18,7 @@ Chats.push({
     vector: [ -2.0011816, -2.915759, 3.953413, 4.5045347, -1.828981, -3.1332562 ], // 6次元ベクトル
     style: {
         fontFamily: '',
-        fontSize: '20px',
+        fontSize: '12px',
         color: 'red',
         background: 'linear-gradient(transparent 90%, #FC74EF 90%)', // love
     },
@@ -41,7 +42,7 @@ function msgFooking(msg){
         vector: [ -2.0011816, -2.915759, 3.953413, 4.5045347, -1.828981, -3.1332562 ], // 6次元ベクトル
         style: {
             fontFamily: '',
-            fontSize: '20px',
+            fontSize: '12px',
             color: 'black',
             background: 'linear-gradient(transparent 90%, #FC74EF 90%)', // love
         },
@@ -71,12 +72,25 @@ app.post('/messages', (req, res) => {
             },
             timeStamp : getDateTime()
         })
-        .then((postData) => {
-            res.json(postData);
+    res.json(postData);
+});
+
+// ディレクトリからスタンプを読み取り、json形式で返す
+app.get('/stamps', (req, res) => {
+	const stampDirPath = process.cwd()+'/static/images/stamps';
+	fs.readdir(stampDirPath, (err, files) => {
+	res.json(files);
+  });
+});
+
+app.post('/messages/stamp', (req, res) => {
+    var postData = req.body;
+    Chats.push({
+            sender : postData.sender,
+            stampTitle : postData.stamp,
+            timeStamp : getDateTime()
         })
-        .catch((err) => {
-            res.send(err);
-        });
+    res.json(postData);
 });
 
 app.get('/', (req, res) => {
