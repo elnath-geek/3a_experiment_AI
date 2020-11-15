@@ -89,7 +89,7 @@ export default {
               fetch('/api/messages', {
                   method:"POST",
                   headers: {'Content-Type': 'application/json',},
-                  body: JSON.stringify({mess: text}),
+                  body: JSON.stringify({sender:this.myid, mess: text}),
               })
               .then(() => {
                   this.getMessages();
@@ -109,9 +109,9 @@ export default {
     mounted() {
       fetch('/api')
       .then( response => response.json())
-      .then( jsonData => {this.friendName=jsonData.frendName;
-                        this.myid=jsonData.myidf;
-                        this.f1id=jsonData.fiidf;
+      .then( jsonData => {this.friendName=jsonData.userID2;
+                        this.myid=jsonData.userID1;
+                        this.f1id=jsonData.userID2;
                         });
       this.getMessages()
       console.log('mounted')

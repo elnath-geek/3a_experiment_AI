@@ -1,21 +1,18 @@
 const express = require('express')
 const app = express()
 var bodyParser = require('body-parser');
-var ejs = require("ejs");
-app.engine('ejs',ejs.renderFile);
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 
-//IDを設定
-var myID = '01';
-var f1ID = '02';
+//ID
+var user1 = '01';
+var user2 = 'Bot';
 
-//会話格納用（スタンプや画像はまだ）
 var Chats = [];
 
-//  最初の挨拶
+//bot処理
 Chats.push({
-    sender : f1ID,
+    sender : user2,
     message : 'やあ！',
     vector: [ -2.0011816, -2.915759, 3.953413, 4.5045347, -1.828981, -3.1332562 ], // 6次元ベクトル
     style: {
@@ -27,6 +24,31 @@ Chats.push({
     timeStamp : getDateTime()
     });
 
+var chatlen = 0
+const timer = setInterval(function(){
+    if(Chats.length>chatlen){
+        chatlen = Chats.length
+        if(Chats[chatlen-1].sender == user1){
+            msgFooking(Chats[chatlen-1].message);
+        }
+    }
+},1000);
+
+function msgFooking(msg){
+    Chats.push({
+        sender : user2,
+        message : msg + "だね。",
+        vector: [ -2.0011816, -2.915759, 3.953413, 4.5045347, -1.828981, -3.1332562 ], // 6次元ベクトル
+        style: {
+            fontFamily: '',
+            fontSize: '20px',
+            color: 'black',
+            background: 'linear-gradient(transparent 90%, #FC74EF 90%)', // love
+        },
+        timeStamp : getDateTime()
+    });
+}
+//bot
 
 // クライアントからgetされると会話全件をjsonで返す
 app.get('/messages', (req, res) => {
@@ -38,7 +60,7 @@ app.post('/messages', (req, res) => {
     var postData = req.body;
 
     Chats.push({
-            sender : myID,
+            sender : postData.sender,
             message : postData.mess,
             vector: [ -2.0011816, -2.915759, 3.953413, 4.5045347, -1.828981, -3.1332562 ], // 6次元ベクトル
             style: {
@@ -57,39 +79,10 @@ app.post('/messages', (req, res) => {
         });
 });
 
-// （暫定）1秒ごとに新しいメッセージを検索する
-var chatlen = 0
-const timer = setInterval(function(){
-    if(Chats.length>chatlen){
-        chatlen = Chats.length
-        if(Chats[chatlen-1].sender == '01'){
-            msgFooking(Chats[chatlen-1].message);
-        }
-    }
-},1000);
-
-// （暫定）ECHOさんの処理
-function msgFooking(msg){
-    Chats.push({
-        sender : f1ID,
-        message : msg + "だね。",
-        vector: [ -2.0011816, -2.915759, 3.953413, 4.5045347, -1.828981, -3.1332562 ], // 6次元ベクトル
-        style: {
-            fontFamily: '',
-            fontSize: '20px',
-            color: 'black',
-            background: 'linear-gradient(transparent 90%, #FC74EF 90%)', // love
-        },
-        timeStamp : getDateTime()
-    });
-}
-
-// ルートアクセス時にベースの画面を返す
-// 友達の名前とそれぞれのIDをEJSでHTMLに埋め込む
 app.get('/', (req, res) => {
-  res.json({frendName: 'Bot' ,
-         myidf: myID ,
-         fiidf: f1ID });
+  res.json({
+         userID1: user1 ,
+         userID2: user2 });
 });
 
 // 日時の整形処理
