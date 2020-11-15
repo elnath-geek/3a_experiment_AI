@@ -5,12 +5,13 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 var fs = require('fs');
 
-var user1 = 'Alice';
-var user2 = 'Bot';
+var user1 = 'Wraith';
+var user2 = 'Pathfinder';
 
 var Chats = [];
 
 //bot処理
+/*
 Chats.push({
     sender : user2,
     message : 'やあ！',
@@ -49,6 +50,7 @@ function msgFooking(msg){
     });
 }
 //bot
+*/
 
 // クライアントに会話を返す
 app.get('/messages', (req, res) => {
@@ -65,7 +67,7 @@ app.post('/messages', (req, res) => {
             vector: [ -2.0011816, -2.915759, 3.953413, 4.5045347, -1.828981, -3.1332562 ], // 6次元ベクトル
             style: {
                 fontFamily: '',
-                fontSize: '20px',
+                fontSize: '16px',
                 color: 'black',
                 background: 'linear-gradient(transparent 90%, #FC74EF 90%)',
             },

@@ -207,9 +207,9 @@ export default {
     mounted() {
       fetch('/api')
       .then( response => response.json())
-      .then( jsonData => {this.friendName=jsonData.userID2;
-                        this.myid=jsonData.userID1;
-                        this.f1id=jsonData.userID2;
+      .then( jsonData => {this.friendName=jsonData.userID1;
+                        this.myid=jsonData.userID2;
+                        this.f1id=jsonData.userID1;
                         });
       this.getMessages()
       console.log('mounted')
