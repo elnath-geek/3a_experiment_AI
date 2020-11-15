@@ -23,9 +23,7 @@
                 <tr id="imageArea"></tr>
                   <tr>
                     <td style="width:0.5%;">
-                      <input id="imageFiles" type="file" style="display:none" name="imageFiles"/>
-                      <a href="" id="upload-link"> <i class="fa fa-image" style="font-size: 43px;color: #b1b5c1;margin-top:-1rem;"></i></a>
-                      <input id="" name="image" type="hidden" class="imageData" />
+                      <a href="" data-toggle="modal" data-target="#stampModalLong" v-on:click="getSuggestedStamps()"> 	<i class="fa fa-cloud" style="font-size: 43px;color: #b1b5c1;margin-top:-1rem;"></i></a>
                     </td>
                     <td style="width:0.5%;">
                       <a href="" data-toggle="modal" data-target="#stampModalLong" v-on:click="getStamps()"> 	<i class="fa fa-smile-o" style="font-size: 43px;color: #b1b5c1;margin-top:-1rem;"></i></a>
@@ -146,7 +144,16 @@ export default {
               this.renderStamps(getJsonData);
             });
         },
-
+        getSuggestedStamps() {
+          console.log('getSuggestedStamps')
+          document.getElementById('error').innerHTML = '';
+          fetch('/api/stamps/suggested')
+            .then((data) => data.json())
+            .then((json) => {
+              var getJsonData = json;
+              this.renderStamps(getJsonData);
+            });
+        },
         renderStamps(getJsonData) {
           console.log('renderStamps')
           document.getElementById('stamptable').innerHTML = '';

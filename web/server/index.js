@@ -5,7 +5,6 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 var fs = require('fs');
 
-//ID
 var user1 = 'Alice';
 var user2 = 'Bot';
 
@@ -51,12 +50,12 @@ function msgFooking(msg){
 }
 //bot
 
-// クライアントからgetされると会話全件をjsonで返す
+// クライアントに会話を返す
 app.get('/messages', (req, res) => {
     res.json(Chats);
 });
 
-// 会話内容がポストされれば、それを登録する
+// 会話を登録
 app.post('/messages', (req, res) => {
     var postData = req.body;
 
@@ -75,7 +74,7 @@ app.post('/messages', (req, res) => {
     res.json(postData);
 });
 
-// ディレクトリからスタンプを読み取り、json形式で返す
+// スタンプ一覧を返す
 app.get('/stamps', (req, res) => {
 	const stampDirPath = process.cwd()+'/static/images/stamps';
 	fs.readdir(stampDirPath, (err, files) => {
@@ -83,6 +82,15 @@ app.get('/stamps', (req, res) => {
   });
 });
 
+// 提案されたスタンプ一覧を返す
+app.get('/stamps/suggested', (req, res) => {
+	const stampDirPath = process.cwd()+'/static/images/stamps';
+	fs.readdir(stampDirPath, (err, files) => {
+	res.json(files);
+  });
+});
+
+// スタンプを登録
 app.post('/messages/stamp', (req, res) => {
     var postData = req.body;
     Chats.push({
@@ -93,13 +101,14 @@ app.post('/messages/stamp', (req, res) => {
     res.json(postData);
 });
 
+// 初期情報
 app.get('/', (req, res) => {
   res.json({
          userID1: user1 ,
          userID2: user2 });
 });
 
-// 日時の整形処理
+//日時取得
 function getDateTime(){
     var date = new Date();
 
