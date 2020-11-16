@@ -19,10 +19,10 @@ def translate(text,source="ja",target="en"):
     return rlist
 
 def suggest(emotions, k=3):
-    stamp = pd.read_csv("Stamp_neutral.csv")
+    stamp = pd.read_csv("Stamp.csv")
     dist = []
     for _, e in stamp.iterrows():
-      dist.append(np.dot(e[1:], np.array(emotions)) / (np.linalg.norm(e[1:]) * np.linalg.norm(emotions)))
+      dist.append(np.dot(e[1:7], np.array(emotions)) / (np.linalg.norm(e[1:7]) * np.linalg.norm(emotions)))
     index = np.array(dist).argsort()[::-1][:k]
     stamps = []
     for i in index:
@@ -65,7 +65,7 @@ def main():
     model = BertForSequenceClassification.from_pretrained("bert-base-uncased", num_labels=7).to(device)
     model.zero_grad()
     model.eval()
-    model.load_state_dict(torch.load("working_dataset4/model/fineTuneModel.pt"))
+    model.load_state_dict(torch.load("working_dataset5/model/fineTuneModel.pt"))
 
     with torch.no_grad():
         output = model(t_input_id, token_type_ids=None, attention_mask=t_attention_mask)
@@ -78,7 +78,7 @@ def main():
         for o in output:
             o = [*o[0:4],*o[5:7],o[4]]
             print(o)
-            print(*suggest(o), sep="\n")
+            print(*suggest(o[:6]), sep="\n")
         #print(*suggest(np.mean(output, axis=0)), sep="\n")
             
 if __name__ == "__main__":
