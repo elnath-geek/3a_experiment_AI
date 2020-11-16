@@ -65,7 +65,7 @@ def main():
     model = BertForSequenceClassification.from_pretrained("bert-base-uncased", num_labels=7).to(device)
     model.zero_grad()
     model.eval()
-    model.load_state_dict(torch.load("working_dataset2/model/fineTuneModel.pt"))
+    model.load_state_dict(torch.load("working_dataset4/model/fineTuneModel.pt"))
 
     with torch.no_grad():
         output = model(t_input_id, token_type_ids=None, attention_mask=t_attention_mask)

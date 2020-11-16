@@ -1,5 +1,20 @@
 # train
 
+https://github.com/scikit-learn/scikit-learn/blob/0fb307bf3/sklearn/metrics/_classification.py#L1825
+- Current Learning rate:
+- Average Training loss:
+- Validation Accuracy:
+- Validation MCC Accuracy:
+- precision: tp / (tp + fp)
+- recall: tp / (tp + fn)
+- f1-score: 2 * precision * recall /  precision + recall
+- micro avg: Calculate metrics globally by counting the total true positives,
+            false negatives and false positives.
+   - 全てのlabelsが現れていたら、accuracy 
+
+- macro avg: Calculate metrics for each label, and find their unweighted
+            mean.  This does not take label imbalance into account.
+
 ## 最初のバージョン
 
 Validation Accuracy:  0.9260912698412699
@@ -40,6 +55,8 @@ Epoch 2
       mi avg   0.937500  0.937500  0.937500        16
       ma avg   0.666667  0.645833  0.655556        16
 \# mi avg = micro avg : valに無いラベルがある時
+
+\# ma avg = macro avg
 
 Epoch 3
 
@@ -481,3 +498,238 @@ Epoch 3
       mi avg   0.937500  0.937500  0.937500        16
       ma avg   0.583333  0.583333  0.555556        16
 weighted avg   0.968750  0.937500  0.937500        16
+
+## 良さげなものを組み合わせたもの
+
+- epochs=5
+- num_warmup_steps=40
+- scheduler=cosine_with_hard_restartsschedule_with_warmup;3cycles
+
+### 6vector
+
+Epoch 1
+
+	Current Learning rate:  7.959657130241231e-06
+	Average Training loss:  0.38849709827459517
+	Validation Accuracy:  0.9265873015873016
+	Validation MCC Accuracy:  0.9040217697133999
+
+              precision    recall  f1-score   support
+       anger   1.000000  1.000000  1.000000         2
+        fear   1.000000  1.000000  1.000000         3
+         joy   1.000000  1.000000  1.000000         2
+        love   1.000000  1.000000  1.000000         2
+     sadness   1.000000  1.000000  1.000000         7
+    surprise   0.000000  0.000000  0.000000         0
+
+      mi avg   1.000000  1.000000  1.000000        16
+      ma avg   0.833333  0.833333  0.833333        16
+
+Epoch 2
+
+	Current Learning rate:  1.854189146174318e-05
+	Average Training loss:  0.11045571533734802
+	Validation Accuracy:  0.9350198412698413
+	Validation MCC Accuracy:  0.9154179626765927
+
+              precision    recall  f1-score   support
+       anger   1.000000  1.000000  1.000000         3
+        fear   0.000000  0.000000  0.000000         0
+         joy   1.000000  0.750000  0.857143         4
+        love   0.000000  0.000000  0.000000         0
+     sadness   1.000000  1.000000  1.000000         9
+    surprise   0.000000  0.000000  0.000000         0
+
+      mi avg   0.937500  0.937500  0.937500        16
+      ma avg   0.500000  0.458333  0.476190        16
+
+Epoch 3
+
+	Current Learning rate:  2.2410236275141406e-06
+	Average Training loss:  0.09844521396060608
+	Validation Accuracy:  0.9320436507936508
+	Validation MCC Accuracy:  0.9115287832161694
+
+              precision    recall  f1-score   support
+       anger   1.000000  1.000000  1.000000         3
+        fear   1.000000  1.000000  1.000000         4
+         joy   1.000000  1.000000  1.000000         4
+        love   1.000000  1.000000  1.000000         1
+     sadness   1.000000  1.000000  1.000000         4
+    surprise   0.000000  0.000000  0.000000         0
+
+      mi avg   1.000000  1.000000  1.000000        16
+      ma avg   0.833333  0.833333  0.833333        16
+
+Epoch 4
+
+	Current Learning rate:  1.3347404686853789e-05
+	Average Training loss:  0.08268569584532276
+	Validation Accuracy:  0.9320436507936508
+	Validation MCC Accuracy:  0.9103210321066391
+
+              precision    recall  f1-score   support
+       anger   1.000000  1.000000  1.000000         3
+        fear   1.000000  1.000000  1.000000         2
+         joy   1.000000  1.000000  1.000000         3
+        love   0.000000  0.000000  0.000000         0
+     sadness   1.000000  1.000000  1.000000         5
+    surprise   1.000000  1.000000  1.000000         3
+
+      mi avg   1.000000  1.000000  1.000000        16
+      ma avg   0.833333  0.833333  0.833333        16
+
+Epoch 5
+
+	Current Learning rate:  0.0
+	Average Training loss:  0.06743377005122271
+	Validation Accuracy:  0.9315476190476191
+	Validation MCC Accuracy:  0.9103677235386679
+
+              precision    recall  f1-score   support
+       anger   1.000000  1.000000  1.000000         3
+        fear   0.500000  1.000000  0.666667         1
+         joy   1.000000  1.000000  1.000000         5
+        love   1.000000  1.000000  1.000000         1
+     sadness   1.000000  1.000000  1.000000         5
+    surprise   0.000000  0.000000  0.000000         1
+
+    accuracy                       0.937500        16
+      ma avg   0.750000  0.833333  0.777778        16
+
+### 7vector
+
+Epoch 1
+
+	Current Learning rate:  7.948279274905677e-06
+	Average Training loss:  0.4306978067884022
+	Validation Accuracy:  0.93994140625
+	Validation MCC Accuracy:  0.921997118777985
+
+              precision    recall  f1-score   support
+       anger   0.000000  0.000000  0.000000         0
+        fear   1.000000  1.000000  1.000000         1
+         joy   1.000000  1.000000  1.000000         4
+        love   0.000000  0.000000  0.000000         0
+     neutral   0.000000  0.000000  0.000000         0
+     sadness   1.000000  1.000000  1.000000         1
+    surprise   1.000000  1.000000  1.000000         1
+
+      mi avg   1.000000  1.000000  1.000000         7
+      ma avg   0.571429  0.571429  0.571429         7
+
+Epoch 2
+
+	Current Learning rate:  1.8537355279056116e-05
+	Average Training loss:  0.11929642869346171
+	Validation Accuracy:  0.93701171875
+	Validation MCC Accuracy:  0.9183903001392849
+
+              precision    recall  f1-score   support
+       anger   1.000000  1.000000  1.000000         1
+        fear   1.000000  1.000000  1.000000         1
+         joy   0.000000  0.000000  0.000000         0
+        love   1.000000  1.000000  1.000000         1
+     neutral   1.000000  1.000000  1.000000         2
+     sadness   1.000000  1.000000  1.000000         2
+    surprise   0.000000  0.000000  0.000000         0
+
+      mi avg   1.000000  1.000000  1.000000         7
+      ma avg   0.714286  0.714286  0.714286         7
+
+Epoch 3
+
+	Current Learning rate:  2.2373584634177826e-06
+	Average Training loss:  0.10433310108923849
+	Validation Accuracy:  0.9425920758928571
+	Validation MCC Accuracy:  0.9245385683816978
+
+              precision    recall  f1-score   support
+       anger   0.000000  0.000000  0.000000         0
+        fear   0.000000  0.000000  0.000000         0
+         joy   1.000000  1.000000  1.000000         2
+        love   0.000000  0.000000  0.000000         0
+     neutral   0.000000  0.000000  0.000000         0
+     sadness   1.000000  1.000000  1.000000         4
+    surprise   0.000000  0.000000  0.000000         1
+
+      mi avg   0.857143  0.857143  0.857143         7
+      ma avg   0.285714  0.285714  0.285714         7
+
+Epoch 4
+
+	Current Learning rate:  1.3344666248983427e-05
+	Average Training loss:  0.08439898188430521
+	Validation Accuracy:  0.943359375
+	Validation MCC Accuracy:  0.9269604322175398
+
+              precision    recall  f1-score   support
+       anger   1.000000  1.000000  1.000000         3
+        fear   1.000000  1.000000  1.000000         2
+         joy   1.000000  1.000000  1.000000         1
+        love   0.000000  0.000000  0.000000         0
+     neutral   0.000000  0.000000  0.000000         0
+     sadness   1.000000  1.000000  1.000000         1
+    surprise   0.000000  0.000000  0.000000         0
+
+      mi avg   1.000000  1.000000  1.000000         7
+      ma avg   0.571429  0.571429  0.571429         7
+
+Epoch 5
+
+	Current Learning rate:  0.0
+	Average Training loss:  0.06987047429820147
+	Validation Accuracy:  0.94189453125
+	Validation MCC Accuracy:  0.9246983632196787
+
+              precision    recall  f1-score   support
+       anger   1.000000  1.000000  1.000000         1
+        fear   0.000000  0.000000  0.000000         0
+         joy   1.000000  1.000000  1.000000         3
+        love   0.000000  0.000000  0.000000         0
+     neutral   0.000000  0.000000  0.000000         0
+     sadness   0.000000  0.000000  0.000000         0
+    surprise   1.000000  1.000000  1.000000         3
+
+      mi avg   1.000000  1.000000  1.000000         7
+      ma avg   0.428571  0.428571  0.428571         7
+
+### test
+
+彼はすぐに怒る。震え上がるほど驚いた。とても楽しかった。愛しています。久しぶりに映画を見て泣いた。すごいびっくりした。これは普通の文章です。
+
+#### 6
+
+anger,fear,joy,love,sadness,surprise
+
+[ **1.** -0.27817067 -0.55422854 -0.74066313 -0.02495716 -0.66522618]
+
+[ 0.02791669  **0.94802284** -0.29262326 -0.77764956 -0.24898918 -0.47673535]
+
+[-0.22255776 -0.6419545   **1.**        -0.48942057 -0.45224468 -0.43107986]
+
+[-0.7104996  -0.96441523  0.72581959  **0.75610693** -0.12992102 -0.83565736]
+
+[ 0.18488377 -0.53411563  0.10170836 -0.44571535  **0.7882158**  -1.        ]
+
+[-0.45489903 -0.33506107 -0.08170045 -0.49171189 -0.65753841  **0.95584162**]
+
+[-0.25512193  0.05891072  <u>0.96220231</u> -0.7412649  -0.26292316 -0.43906069]
+
+#### 7
+
+anger,fear,joy,love,sadness,surprise,neutral
+
+[**1.0**, 0.26611433426539105, -0.5849466721216837, -0.7892959912618002, -0.39055323600769043, -0.8388388951619467, -0.3223688205083211]
+
+[0.3483161926269531, **0.42267608642578125**, -0.5932149092356364, -0.7788832187652588, -0.9782595634460449, 0.0055481741825739546, <u>0.5571238994598389</u>]
+
+[0.007994923740625381, -0.8162984848022461, **0.5089516639709473**, -0.5211163361867269, -0.8625255425771078, -0.10985128084818523, <u>0.7214287122090658</u>]
+
+[-0.46113165219624835, -1.0, 0.5488624175389608, **0.5653338034947714**, -0.24298473199208578, -0.9773627916971842, 0.19945021470387778]
+
+[0.15553400913874307, -0.3934965928395589, -0.19072020053863525, -0.7566467126210531, **0.7184802691141764**, -0.943925142288208, -0.1550851364930471]
+
+[-0.3169090946515401, -0.3499046564102173, -0.2507408658663432, -0.2070910930633545, -1.0, **0.724457581837972**, 0.43071595827738446]
+
+[-0.17771536111831665, -0.21556222438812256, -0.06316315631071727, -0.2505715489387512, -0.8753894964853922, -0.0038782010475794473, **0.9316442807515463**]

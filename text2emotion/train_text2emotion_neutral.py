@@ -2,6 +2,7 @@ import torch
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
 import torch.nn.functional as F
 from transformers import BertTokenizer, BertConfig,AdamW, BertForSequenceClassification,get_linear_schedule_with_warmup
+import transformers
 
 import pandas as pd
 import numpy as np
@@ -86,14 +87,16 @@ def main():
     adam_epsilon = 1e-8
 
     # Number of training epochs (authors recommend between 2 and 4)
-    epochs = 3
+    epochs = 5
 
-    num_warmup_steps = 0
+    num_warmup_steps = 40
     num_training_steps = len(train_dataloader)*epochs
 
     ### In Transformers, optimizer and schedules are splitted and instantiated like this:
     optimizer = AdamW(model.parameters(), lr=lr,eps=adam_epsilon,correct_bias=False)  # To reproduce BertAdam specific behavior set correct_bias=False
-    scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps=num_warmup_steps, num_training_steps=num_training_steps)  # PyTorch scheduler
+    # scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps=num_warmup_steps, num_training_steps=num_training_steps)  # PyTorch scheduler
+    scheduler = transformers.get_cosine_with_hard_restarts_schedule_with_warmup(optimizer, num_warmup_steps=num_warmup_steps,
+                                                             num_training_steps=num_training_steps, num_cycles=3)
 
     ## Store our loss and accuracy for plotting
     train_loss_set = []
