@@ -42,10 +42,10 @@ def main():
     t_attention_mask = torch.Tensor(attention_mask).long()
 
     # Load BertForSequenceClassification, the pretrained BERT model with a single linear classification layer on top.
-    model = BertForSequenceClassification.from_pretrained("bert-base-uncased", num_labels=6).to(device)
+    model = BertForSequenceClassification.from_pretrained("bert-base-uncased", num_labels=7).to(device)
     model.zero_grad()
     model.eval()
-    model.load_state_dict(torch.load("./src/fineTuneModel.pt"))
+    model.load_state_dict(torch.load("./src/fineTuneModel_7.pt"))
 
     with torch.no_grad():
         output = model(t_input_id, token_type_ids=None, attention_mask=t_attention_mask)
