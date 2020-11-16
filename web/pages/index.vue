@@ -1,35 +1,33 @@
 <template>
-  <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
-      <v-container v-for="talk in talk_datum" :key="talk.sender">
-        <v-card>
-          <v-card-subtitle>
-            <v-icon role="img">mdi-account</v-icon>
-            {{ talk.sender }}
-          </v-card-subtitle>
-          <v-card-text class="textarea">
-            <span v-for="message in talk.messages" :key="message.text" :style="message.style">
-              {{message.text}}<br>
-              {{message.vector}}<br>
-            </span>
-            [anger, fear, joy, love, sadness, surprise]<br>
-          </v-card-text>
-        </v-card>
-      </v-container>
-      <v-container>
-        <div>
-          <img :src="require('@/assets/image/mark_face_angry.png')" alt="">
-        </div>
-        <v-textarea
-          auto-grow
-          rows="1"
-          v-model="text"
-          placeholder="ここに入力してください"
-          @keydown.enter.ctrl="submit"></v-textarea>
-        <!-- {{text}} -->
-      </v-container>
-    </v-col>
-  </v-row>
+  <div>
+    <v-row justify="center" align="center">
+      <v-col cols="12" sm="8" md="6">
+        <v-container v-for="talk in talk_datum" :key="talk.sender">
+          <v-card>
+            <v-card-subtitle>
+              <v-icon role="img">mdi-account</v-icon>
+              {{ talk.sender }}
+            </v-card-subtitle>
+            <v-card-text>
+              <span v-for="message in talk.messages" :key="message.text" :style="message.style">
+                {{message.text}}
+              </span>
+            </v-card-text>
+          </v-card>
+        </v-container>
+        <v-container>
+          <v-textarea
+            auto-grow
+            rows="1"
+            v-model="text"
+            placeholder="ここに入力してください"
+            @keydown.enter.ctrl="submit"></v-textarea>
+          {{text}}
+        </v-container>
+      </v-col>
+    </v-row>
+
+  </div>
 </template>
 
 <script>
@@ -119,7 +117,8 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.textarea{
-  line-height: 1.5;
-}
+    .textarea{
+      position: fixed;
+      bottom: 20px;
+    }
 </style>
