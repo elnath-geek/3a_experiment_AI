@@ -10,15 +10,6 @@ import os, io, sys, codecs
 import requests
 import re
 
-
-
-def translate(text, source="ja",target="en"):
-    url = 'https://script.google.com/macros/s/AKfycbwjPPfA-Br7ykp0wkujue6_STL3k9U8nYt1n_2XXOHXR_FpBmwo/exec'
-    payload = {"text": text, "source": source, "target": target}
-    r = requests.get(url, params=payload).json()['text']
-    rlist=re.findall(".*?[.!?]", r)
-    return rlist
-
 def suggest(emotions, k=3):
     stamp = pd.read_csv("src/Stamp.csv")
     dist = []
