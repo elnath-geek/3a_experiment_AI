@@ -102,6 +102,7 @@ app.post('/stamps/suggested', (req, res) => {
   for(let i=Chats.length-1; i>=0; i--){
     if(Chats[i].sender == req.body.sender){
       stamps = Chats[i].stamps
+      break;
     }
   }
   res.send(stamps);

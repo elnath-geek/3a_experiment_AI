@@ -41,3 +41,24 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.anger {
+  font-family: 'とがりて';
+}
+.fear {
+  font-family: 'はきだめ';
+}
+.joy {
+  font-family: 'けいおん';
+}
+.love {
+  font-family: 'りいポップ';
+}
+.sadness {
+  font-family: '851チカラヨワク';
+}
+.surprize {
+  font-family: 'GNkill';
+}
+</style>

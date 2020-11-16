@@ -2,3 +2,28 @@
 //
 // The variables you want to modify
 // $font-size-root: 20px;
+
+@font-face {
+  font-family: 'とがりて'; // anger
+  src: url('~@/assets/fonts/togalite-regular.otf') format('opentype');
+}
+@font-face {
+  font-family: 'はきだめ'; // fear
+  src: url('~@/assets/fonts/hakidame.TTF') format('opentype');
+}
+@font-face {
+  font-family: 'けいおん'; // joy
+  src: url('~@/assets/fonts/keifont.ttf') format('opentype');
+}
+@font-face {
+  font-family: 'りいポップ'; // love
+  src: url('~@/assets/fonts/RiiPopkkR.otf') format('opentype');
+}
+@font-face {
+  font-family: '851チカラヨワク'; // sadness
+  src: url('~@/assets/fonts/851CHIKARA-YOWAKU_002.ttf') format('opentype');
+}
+@font-face {
+  font-family: 'GNkill'; // surprize
+  src: url('~@/assets/fonts/GN-KillGothic-U-KanaNA.ttf') format('opentype');
+}
