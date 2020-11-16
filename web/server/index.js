@@ -1,9 +1,12 @@
 const express = require('express')
+const cors       = require('cors')
 const app = express()
 var bodyParser = require('body-parser');
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
+app.use(cors())
 var fs = require('fs');
+const axios = require('axios')
 
 var user1 = 'Wraith';
 var user2 = 'Pathfinder';
@@ -60,20 +63,23 @@ app.get('/messages', (req, res) => {
 // 会話を登録
 app.post('/messages', (req, res) => {
     var postData = req.body;
+    console.log(postData)
 
-    Chats.push({
-            sender : postData.sender,
-            message : postData.mess,
-            vector: [ -2.0011816, -2.915759, 3.953413, 4.5045347, -1.828981, -3.1332562 ], // 6次元ベクトル
-            style: {
-                fontFamily: '',
-                fontSize: '16px',
-                color: 'black',
-                background: 'linear-gradient(transparent 90%, #FC74EF 90%)',
-            },
-            timeStamp : getDateTime()
-        })
-    res.json(postData);
+    axios.post('http://localhost:3001/api/main', {
+      text: postData.mess,
+      sender: postData.sender
+    })
+    .then((ret) =>{
+      console.log(ret.data)
+      ret.data.map( data => {
+        Chats.push(data)
+      })
+      res.json(postData);
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+
 });
 
 // スタンプ一覧を返す
@@ -84,12 +90,21 @@ app.get('/stamps', (req, res) => {
   });
 });
 
-// 提案されたスタンプ一覧を返す
 app.get('/stamps/suggested', (req, res) => {
-	const stampDirPath = process.cwd()+'/static/images/stamps';
-	fs.readdir(stampDirPath, (err, files) => {
-	res.json(files);
-  });
+  let stamps = ['mark_manpu15_shock.png','mark_face_jito.png']
+	res.json(stamps);
+});
+// 提案されたスタンプ一覧を返す
+app.post('/stamps/suggested', (req, res) => {
+  // console.log(req.body.sender)
+  // console.log(Chats)
+  let stamps = []
+  for(let i=Chats.length-1; i>=0; i--){
+    if(Chats[i].sender == req.body.sender){
+      stamps = Chats[i].stamps
+    }
+  }
+  res.send(stamps);
 });
 
 // スタンプを登録

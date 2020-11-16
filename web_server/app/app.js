@@ -22,6 +22,10 @@ const background_style = [
   'linear-gradient(transparent 90%, #62D96E 90%)', // surprize
 ]
 
+const fontFamily_style = [
+
+]
+
 function styleGen(vector) {
   const style = {
     fontFamily: '',
@@ -36,8 +40,8 @@ function styleGen(vector) {
     style.background = background_style[max_val_index]
   }
   if(max_vec_val > 5){ // fontFamily 変えるのどうしよう…
-  }
 
+  }
 
   return style
 }
@@ -61,11 +65,7 @@ app.post('/api/main',function(req,res){
     const en_sentence = translate_data.data.text
     // console.log("en_sentence", en_sentence)
 
-    const return_data = {
-      sender: 'Alice',
-      background_color: 'default',
-      messages: [],
-    }
+    const return_data = []
 
     const pyshell = new PythonShell('./src/text2emotion.py');
     let receive_buffer = ""
@@ -75,15 +75,21 @@ app.post('/api/main',function(req,res){
       if( python_out == 'end' ){
         image_array = receive_buffer.split(" ")
         console.log(image_array)
+        for(let i=0; i<ja_split_sentence.length; i++) {
+          return_data[i].stamps = image_array.slice(i*3, (i+1)*3)
+        }
         res.status(200).send(return_data)
       } else if( python_out == 'vec_end') {
         vector = receive_buffer.split(',').map(Number)
         console.log(vector)
         for(let i=0; i<ja_split_sentence.length; i++) {
-          return_data.messages.push({
-            text: ja_split_sentence[i],
+          return_data.push({
+            sender: req.body.sender,
+            message: ja_split_sentence[i],
             vector: vector.slice(i*6, (i+1)*6), // 6次元ベクトル
             style: styleGen(vector.slice(i*6, (i+1)*6)),
+            stamps: [],
+            timeStamp: getDateTime(),
           })
         }
         receive_buffer = ''
@@ -95,6 +101,34 @@ app.post('/api/main',function(req,res){
     console.log(err)
   })
 });
+
+function getDateTime(){
+  var date = new Date();
+
+  var year_str = date.getFullYear();
+  var month_str = date.getMonth();
+  var day_str = date.getDate();
+  var hour_str = date.getHours();
+  var minute_str = date.getMinutes();
+  var second_str = date.getSeconds();
+
+  month_str = ('0' + month_str).slice(-2);
+  day_str = ('0' + day_str).slice(-2);
+  hour_str = ('0' + hour_str).slice(-2);
+  minute_str = ('0' + minute_str).slice(-2);
+  second_str = ('0' + second_str).slice(-2);
+
+  format_str = 'YYYY/MM/DD hh:mm:ss';
+  format_str = format_str.replace(/YYYY/g, year_str);
+  format_str = format_str.replace(/MM/g, month_str);
+  format_str = format_str.replace(/DD/g, day_str);
+  format_str = format_str.replace(/hh/g, hour_str);
+  format_str = format_str.replace(/mm/g, minute_str);
+  format_str = format_str.replace(/ss/g, second_str);
+
+  return format_str;
+
+}
 
 //サーバ起動
 app.listen(port);

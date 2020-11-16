@@ -49,8 +49,8 @@
             </div>
           </div>
         </div>
-    </body> 
-    
+    </body>
+
   </div>
 </template>
 
@@ -88,7 +88,7 @@ export default {
                   $('.contents').append(cts);
               } else {
                   var cts ="";
-                  cts =  "<div class='flText'>"; 
+                  cts =  "<div class='flText'>";
                   cts += "  <figure><img src='images/" + this.f1id + ".jpg'/></figure>";
                   cts += "  <div class='flText-text'>";
                   if (getJsonData[i].message) {
@@ -108,7 +108,7 @@ export default {
           obj.scrollTop = document.getElementById('area').scrollHeight;
         },
 
-        getMessages(){   
+        getMessages(){
           console.log('getMessages')
           fetch('/api/messages')
               .then((data) => data.json())
@@ -117,7 +117,7 @@ export default {
                   this.render(getJsonData);
               });
         },
-        
+
         pushMessage(){
           console.log('pushMessage')
           var text = $(".newMessage").val();
@@ -131,7 +131,7 @@ export default {
                   this.getMessages();
                   document.getElementById('inp').value="";
               });
-              
+
           }
         },
 
@@ -148,7 +148,11 @@ export default {
         getSuggestedStamps() {
           console.log('getSuggestedStamps')
           document.getElementById('error').innerHTML = '';
-          fetch('/api/stamps/suggested')
+          fetch('/api/stamps/suggested?sender=Pathfinder', {
+              method:"POST",
+              headers: {'Content-Type': 'application/json',},
+              body: JSON.stringify({sender:this.myid}),
+            })
             .then((data) => data.json())
             .then((json) => {
               var getJsonData = json;
@@ -192,7 +196,7 @@ export default {
                   this.getMessages();
                   document.getElementById('inp').value="";
               });
-              
+
           }
         },
 
@@ -241,14 +245,14 @@ export default {
 .base_view .contents{
   padding: 10px;
   overflow: hidden;
-  line-height: 135%;
+  line-height: 1.5;
 }
-  
+
 .base_view .scroll {
   height: 400px;
   overflow-y: scroll;
 }
-  
+
 /* 自分の会話 */
 .base_view .myText {
   position: relative;
@@ -282,7 +286,7 @@ export default {
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
 }
- 
+
 /* 時刻自分用 */
 .base_view .myText .date {
   content: '';
