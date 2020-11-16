@@ -30,6 +30,7 @@ def main():
     df_neutral = pd.read_csv("../archive/neutral.txt", delimiter=';', header=None, names=['sentence','label'])
 
     df = pd.concat([df_train,df_test,df_val,df_neutral])
+    df = df.sample(frac=1, random_state=16)
     df['label'].unique()
 
     labelencoder = LabelEncoder()
@@ -87,9 +88,9 @@ def main():
     adam_epsilon = 1e-8
 
     # Number of training epochs (authors recommend between 2 and 4)
-    epochs = 5
+    epochs = 3
 
-    num_warmup_steps = 40
+    num_warmup_steps = 30
     num_training_steps = len(train_dataloader)*epochs
 
     ### In Transformers, optimizer and schedules are splitted and instantiated like this:
