@@ -77,7 +77,7 @@ export default {
                   var cts ="";
                   cts =  "<div class='myText'>";
                   if (getJsonData[i].message) {
-                    cts += "  <div class='text'><span style='font-size:12pt;'>"+ getJsonData[i].message + "</span></div>";
+                    cts += "  <div class='text " + getJsonData[i].style.fontFamily + "'><span style='font-size:12pt;'>"+ getJsonData[i].message + "</span></div>";
                     cts += "  <div class='date'>"+ getJsonData[i].timeStamp + "</div>";
                   }
                   if (getJsonData[i].stampTitle) {
@@ -92,7 +92,7 @@ export default {
                   cts += "  <figure><img src='images/" + this.f1id + ".jpg'/></figure>";
                   cts += "  <div class='flText-text'>";
                   if (getJsonData[i].message) {
-                    cts += "    <div class='text'><span style='color:" + getJsonData[i].style.color + ";font-size:"+getJsonData[i].style.fontSize+";background:"+getJsonData[i].style.background+";'>"+ getJsonData[i].message + "</span></div>";
+                    cts += "    <div class='text " + getJsonData[i].style.fontFamily + "'><span style='color:" + getJsonData[i].style.color + ";font-size:"+getJsonData[i].style.fontSize+";background:"+getJsonData[i].style.background+";'>"+ getJsonData[i].message + "</span></div>";
                     cts += "    <div class='date'>"+ getJsonData[i].timeStamp + "</div>";
                   }
                   if (getJsonData[i].stampTitle) {

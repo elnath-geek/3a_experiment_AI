@@ -22,8 +22,13 @@ const background_style = [
   'linear-gradient(transparent 90%, #62D96E 90%)', // surprize
 ]
 
-const fontFamily_style = [
-
+const fontfamily_style = [
+  'anger', // anger
+  'fear', // fear
+  'joy', // joy
+  'love', // love
+  'sadness', // sadness
+  'surprize', // surprize
 ]
 
 function styleGen(vector) {
@@ -33,14 +38,15 @@ function styleGen(vector) {
     color: 'black',
     background: '',
   }
+  vector.splice(4,1);
   const max_vec_val = vector.reduce((a,b) => {return Math.max(a,b)})
   const max_val_index = vector.indexOf(max_vec_val)
-  if(max_vec_val > 3){
-    style.fontSize = Math.round(14 + 1.2*(max_vec_val - 3)) + 'px';
+  if(max_vec_val > 2){
+    style.fontSize = Math.round(14 + 1.2*(max_vec_val - 2)) + 'px';
     style.background = background_style[max_val_index]
   }
-  if(max_vec_val > 5){ // fontFamily 変えるのどうしよう…
-
+  if(max_vec_val > 1.5){
+    style.fontFamily = fontfamily_style[max_val_index]
   }
 
   return style

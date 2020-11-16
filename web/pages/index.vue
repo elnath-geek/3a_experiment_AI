@@ -9,7 +9,10 @@
               {{ talk.sender }}
             </v-card-subtitle>
             <v-card-text>
-              <span v-for="message in talk.messages" :key="message.text" :style="message.style">
+              <span v-for="message in talk.messages"
+              :key="message.text"
+              :style="message.style"
+              :class="message.class">
                 {{message.text}}
               </span>
             </v-card-text>
@@ -49,8 +52,9 @@ export default {
             {
               text: '好きだよ！',
               vector: [ -2.0011816, -2.915759, 3.953413, 4.5045347, -1.828981, -3.1332562 ], // 6次元ベクトル
+              class: 'sadness',
               style: {
-                fontFamily: '',
+                fontFamily: "851チカラヨワク",
                 fontSize: '16px',
                 color: 'black',
                 background: 'linear-gradient(transparent 90%, #FC74EF 90%)', // love
@@ -60,7 +64,7 @@ export default {
               text: 'なんていうと思ったか！',
               vector: [6.4704595,0.056090813,-0.72478443,-2.3732667,-0.2728797,-1.33733], // 6次元ベクトル
               style: {
-                fontFamily: '',
+                fontFamily: 'メイリオ',
                 fontSize: '18px',
                 color: 'black',
                 background: 'linear-gradient(transparent 90%, #E0422D 90%)', // anger
@@ -117,8 +121,12 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-    .textarea{
-      position: fixed;
-      bottom: 20px;
-    }
+.textarea{
+  position: fixed;
+  bottom: 20px;
+}
+
+.sadness {
+  font-family: '851チカラヨワク';
+}
 </style>

@@ -11,6 +11,8 @@ import requests
 import re
 
 def suggest(emotions, k=3):
+    emotions = list(emotions)
+    emotions.pop(4)
     stamp = pd.read_csv("src/Stamp.csv")
     dist = []
     for _, e in stamp.iterrows():
@@ -25,7 +27,7 @@ def suggest(emotions, k=3):
 def main():
     device = torch.device("cpu")
     en_sentence = sys.stdin.readline()
-    en_split_sentence = np.array(re.findall("[.!?]", en_sentence))
+    en_split_sentence = np.array(re.findall(".*?[.!?]", en_sentence))
     # print("python-shell", type(en_split_sentence))
     # print("python-shell", en_split_sentence)
 
@@ -45,7 +47,7 @@ def main():
     model = BertForSequenceClassification.from_pretrained("bert-base-uncased", num_labels=7).to(device)
     model.zero_grad()
     model.eval()
-    model.load_state_dict(torch.load("./src/fineTuneModel_7.pt"))
+    model.load_state_dict(torch.load("./src/fineTuneModel_7_0.pt"))
 
     with torch.no_grad():
         output = model(t_input_id, token_type_ids=None, attention_mask=t_attention_mask)
