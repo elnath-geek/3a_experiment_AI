@@ -2,7 +2,6 @@ import torch
 from torch.utils.data import TensorDataset, DataLoader, RandomSampler, SequentialSampler
 import torch.nn.functional as F
 from transformers import BertTokenizer, BertConfig,AdamW, BertForSequenceClassification,get_linear_schedule_with_warmup
-import transformers
 
 import pandas as pd
 import numpy as np
@@ -27,8 +26,9 @@ def main():
     df_train = pd.read_csv("../archive/train.txt", delimiter=';', header=None, names=['sentence','label'])
     df_test = pd.read_csv("../archive/test.txt", delimiter=';', header=None, names=['sentence','label'])
     df_val = pd.read_csv("../archive/val.txt", delimiter=';', header=None, names=['sentence','label'])
+    df_neutral = pd.read_csv("../archive/neutral.txt", delimiter=';', header=None, names=['sentence','label'])
 
-    df = pd.concat([df_train,df_test,df_val])
+    df = pd.concat([df_train,df_test,df_val,df_neutral])
     df['label'].unique()
 
     labelencoder = LabelEncoder()
@@ -45,7 +45,6 @@ def main():
     MAX_LEN = 256
 
     ## Import BERT tokenizer, that is used to convert our text into tokens that corresponds to BERT library
-    #tokenizer = BertTokenizer.from_pretrained('bert-base-uncased',do_lower_case=True)
     tokenizer = BertTokenizer.from_pretrained('bert-base-uncased',do_lower_case=True)
     input_ids = [tokenizer.encode(sent, add_special_tokens=True,max_length=MAX_LEN,pad_to_max_length=True, truncation=True) for sent in sentences]
     labels = df.label.values
@@ -80,8 +79,7 @@ def main():
     validation_dataloader = DataLoader(validation_data,sampler=validation_sampler,batch_size=batch_size)
 
     # Load BertForSequenceClassification, the pretrained BERT model with a single linear classification layer on top. 
-    #model = BertForSequenceClassification.from_pretrained("bert-base-uncased", num_labels=6).to(device)
-    model = BertForSequenceClassification.from_pretrained("bert-base-uncased", num_labels=6).to(device)
+    model = BertForSequenceClassification.from_pretrained("bert-base-uncased", num_labels=7).to(device)
 
     # Parameters:
     lr = 2e-5
@@ -96,7 +94,6 @@ def main():
     ### In Transformers, optimizer and schedules are splitted and instantiated like this:
     optimizer = AdamW(model.parameters(), lr=lr,eps=adam_epsilon,correct_bias=False)  # To reproduce BertAdam specific behavior set correct_bias=False
     scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps=num_warmup_steps, num_training_steps=num_training_steps)  # PyTorch scheduler
-    #scheduler = transformers.get_cosine_schedule_with_warmup(optimizer, num_warmup_steps=num_warmup_steps, num_training_steps=num_training_steps)
 
     ## Store our loss and accuracy for plotting
     train_loss_set = []
@@ -208,7 +205,7 @@ def main():
         print(classification_report(df_metrics['Actual_class'].values, df_metrics['Predicted_class'].values,
               target_names=sorted(df["label_desc"].unique()),
               labels=np.arange(len(df["label_desc"].unique())), digits=6))
-    print("train finished")
+    print("finish!")
 
 if __name__ == "__main__":
     main()
