@@ -1,0 +1,1 @@
+/var/lib/slurm-llnl/slurmd/job523190/slurm_script: 4: export: /usr/local/cuda: bad variable name

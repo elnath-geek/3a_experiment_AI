@@ -1,0 +1,152 @@
+# dataset + neutral
+# dataset
+ja_sentence これは、腹が立つ文章です。これは、危ない文章です。これは、楽しい文章です。これは、愛おしい文章です。これは、悲しい文章です。これは、驚くべき文章です。これは、普通の文章です。
+en_sentence ['This is an annoying sentence.' ' This is a dangerous sentence.'
+ ' This is a fun sentence.' ' This is a lovely sentence.'
+ ' This is a sad sentence.' ' This is an amazing sentence.'
+ ' This is a normal sentence.']
+  anger,      fear,      joy,       love,      sadness,  surprise,   neutral
+  ではなく、anger,fear,joy,love,neutral,sadness,surprise
+[ 0.64878098 -0.5885632  -0.3022751  -0.50315118  0.36763024  0.06887657
+ -0.52173948]
+mark_manpu05_ase.png
+mark_face_jito.png
+mark_manpu04_question.png
+[ 0.53264399 -0.14638365 -0.42552225 -0.57429425  0.53390944 -0.19763772
+ -0.42351381]
+mark_face_jito.png
+mark_manpu06_moyamoya.png
+mark_manpu15_shock.png
+[-0.05576389 -0.53448637  0.08924516 -0.38491281  0.84848173 -0.20794318
+ -0.15202374]
+mark_manpu05_ase.png
+mark_manpu16_ochiba.png
+mark_face_jito.png
+[ 0.0564194  -0.42254539 -0.40243777  0.01785512  0.6564037   0.03508036
+ -0.15992119]
+mark_manpu05_ase.png
+mark_manpu16_ochiba.png
+mark_manpu06_moyamoya.png
+[ 0.04297533 -0.39678733 -0.42871205 -0.3155129   0.7074302   0.22222676
+ -0.44371005]
+mark_manpu05_ase.png
+mark_manpu16_ochiba.png
+mark_manpu06_moyamoya.png
+[-0.2495749  -0.40906123  0.3921481  -0.63218029  0.61054071 -0.50463565
+  0.20429373]
+mark_face_jito.png
+mark_manpu05_ase.png
+mark_manpu16_ochiba.png
+[ 0.05130902 -0.43254884 -0.00490131 -0.35344183  0.77612448 -0.05012397
+ -0.32619456]
+mark_manpu05_ase.png
+mark_manpu16_ochiba.png
+mark_face_jito.png
+
+ja_sentence 私は、腹が立つ。私は、恐れている。私は、楽しい。私は、愛おしい。私は、悲しい。私は、驚いている。私は、猫です。
+en_sentence ["I'm angry." " I'm afraid." ' IM fun.' ' I love you.' " I'm Sad."
+ " I'm surprised." ' I am a cat.']
+  anger,      fear,      joy,        love,       neutral,    sadness,    surprise
+[ 1.          0.04878146 -0.51597381 -0.75565322 -0.28504896 -0.32468458 -0.55332303]
+[ 0.05646125  1.         -0.60570808 -0.70643743 -0.4218061  -0.20004451 -0.28481458]
+[ 0.05570112 -0.4721909  -0.01015807 -0.36634537  0.83326491 -0.08669459 -0.35175133]
+[ 0.08027308 -0.2825863   0.05323112 -0.0341411   0.51471551  0.11676897 -0.8591133 ]
+[ 0.21630088 -0.15900391 -0.40831089 -0.67898655 -0.0787216   0.86461846 -0.98252964]
+[-0.00857642 -0.42165494 -0.34375489 -0.5177509   0.69765441 -0.41260203  0.40778399]
+[ 0.52098497  0.26348297 -0.17343257 -0.83697391  0.16118805  0.04410518 -0.78673116]
+
+# log
+
+I1115 08:22:03.429636 47385905703616 file_utils.py:41] PyTorch version 1.5.0+cu92 available.
+I1115 08:22:21.796177 47385905703616 tokenization_utils.py:501] loading file https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-vocab.txt from cache at /home/u00461/.cache/torch/transformers/26bc1ad6c0ac742e9b52263248f6d0f00068293b33709fae12320c0e35ccfbbb.542ce4285a40d23a559526243235df47c5f75c197f04f37d1a0c124c32c9a084
+I1115 08:22:40.219015 47385905703616 configuration_utils.py:256] loading configuration file https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-config.json from cache at /home/u00461/.cache/torch/transformers/4dad0251492946e18ac39290fcfe91b89d370fee250efe9521476438fe8ca185.7156163d5fdc189c3016baca0775ffce230789d7fa2a42ef516483e4ca884517
+I1115 08:22:40.221970 47385905703616 configuration_utils.py:292] Model config BertConfig {
+  "architectures": [
+    "BertForMaskedLM"
+  ],
+  "attention_probs_dropout_prob": 0.1,
+  "bos_token_id": null,
+  "do_sample": false,
+  "eos_token_ids": null,
+  "finetuning_task": null,
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 768,
+  "id2label": {
+    "0": "LABEL_0",
+    "1": "LABEL_1"
+  },
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "is_decoder": false,
+  "label2id": {
+    "LABEL_0": 0,
+    "LABEL_1": 1
+  },
+  "layer_norm_eps": 1e-12,
+  "length_penalty": 1.0,
+  "max_length": 20,
+  "max_position_embeddings": 512,
+  "model_type": "bert",
+  "num_attention_heads": 12,
+  "num_beams": 1,
+  "num_hidden_layers": 12,
+  "num_labels": 7,
+  "num_return_sequences": 1,
+  "output_attentions": false,
+  "output_hidden_states": false,
+  "output_past": true,
+  "pad_token_id": 0,
+  "pruned_heads": {},
+  "repetition_penalty": 1.0,
+  "temperature": 1.0,
+  "top_k": 50,
+  "top_p": 1.0,
+  "torchscript": false,
+  "type_vocab_size": 2,
+  "use_bfloat16": false,
+  "vocab_size": 30522
+}
+
+I1115 08:22:40.928645 47385905703616 modeling_utils.py:461] loading weights file https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-pytorch_model.bin from cache at /home/u00461/.cache/torch/transformers/aa1ef1aede4482d0dbcd4d52baad8ae300e60902e88fcb0bebdec09afd232066.36ca03ab34a1a5d5fa7bc3d03d55c4fa650fed07220e2eeebc06ce58d0e9a157
+I1115 08:22:46.484255 47385905703616 modeling_utils.py:546] Weights of BertForSequenceClassification not initialized from pretrained model: ['classifier.weight', 'classifier.bias']
+I1115 08:22:46.484603 47385905703616 modeling_utils.py:552] Weights from pretrained model not used in BertForSequenceClassification: ['cls.predictions.bias', 'cls.predictions.transform.dense.weight', 'cls.predictions.transform.dense.bias', 'cls.predictions.decoder.weight', 'cls.seq_relationship.weight', 'cls.seq_relationship.bias', 'cls.predictions.transform.LayerNorm.weight', 'cls.predictions.transform.LayerNorm.bias']
+/pytorch/torch/csrc/utils/python_arg_parser.cpp:756: UserWarning: This overload of add_ is deprecated:
+	add_(Number alpha, Tensor other)
+Consider using one of the following signatures instead:
+	add_(Tensor other, *, Number alpha)
+I1115 08:30:07.947165 47385905703616 configuration_utils.py:118] Configuration saved in working/model/config.json
+I1115 08:30:08.949592 47385905703616 modeling_utils.py:298] Model weights saved in working/model/pytorch_model.bin
+I1115 08:37:37.601115 47385905703616 configuration_utils.py:118] Configuration saved in working/model/config.json
+I1115 08:37:38.261983 47385905703616 modeling_utils.py:298] Model weights saved in working/model/pytorch_model.bin
+I1115 08:45:06.808226 47385905703616 configuration_utils.py:118] Configuration saved in working/model/config.json
+I1115 08:45:07.905642 47385905703616 modeling_utils.py:298] Model weights saved in working/model/pytorch_model.bin
+HBox(children=(HTML(value='Epoch'), FloatProgress(value=0.0, max=3.0), HTML(value='')))
+<======================Epoch {_} ======================>
+
+	Current Learning rate:  1.3333333333333333e-05
+
+	Average Training loss:  0.3960124861992411
+
+	Validation Accuracy:  0.9312918526785714
+
+	Validation MCC Accuracy:  0.9121948697636416
+<======================Epoch {_} ======================>
+
+	Current Learning rate:  6.666666666666667e-06
+
+	Average Training loss:  0.1214160952186752
+
+	Validation Accuracy:  0.94189453125
+
+	Validation MCC Accuracy:  0.9245774104996769
+<======================Epoch {_} ======================>
+
+	Current Learning rate:  0.0
+
+	Average Training loss:  0.08194012617158764
+
+	Validation Accuracy:  0.9482421875
+
+	Validation MCC Accuracy:  0.9323948103887286
+

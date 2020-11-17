@@ -1,0 +1,140 @@
+# learning rate 2e-5  -->  2e-6
+# working_lr
+
+I1115 13:08:58.358301 47103795899072 file_utils.py:41] PyTorch version 1.5.0+cu92 available.
+I1115 13:09:22.253468 47103795899072 tokenization_utils.py:501] loading file https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-vocab.txt from cache at /home/u00461/.cache/torch/transformers/26bc1ad6c0ac742e9b52263248f6d0f00068293b33709fae12320c0e35ccfbbb.542ce4285a40d23a559526243235df47c5f75c197f04f37d1a0c124c32c9a084
+I1115 13:09:36.954197 47103795899072 configuration_utils.py:256] loading configuration file https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-config.json from cache at /home/u00461/.cache/torch/transformers/4dad0251492946e18ac39290fcfe91b89d370fee250efe9521476438fe8ca185.7156163d5fdc189c3016baca0775ffce230789d7fa2a42ef516483e4ca884517
+I1115 13:09:36.955511 47103795899072 configuration_utils.py:292] Model config BertConfig {
+  "architectures": [
+    "BertForMaskedLM"
+  ],
+  "attention_probs_dropout_prob": 0.1,
+  "bos_token_id": null,
+  "do_sample": false,
+  "eos_token_ids": null,
+  "finetuning_task": null,
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 768,
+  "id2label": {
+    "0": "LABEL_0",
+    "1": "LABEL_1"
+  },
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "is_decoder": false,
+  "label2id": {
+    "LABEL_0": 0,
+    "LABEL_1": 1
+  },
+  "layer_norm_eps": 1e-12,
+  "length_penalty": 1.0,
+  "max_length": 20,
+  "max_position_embeddings": 512,
+  "model_type": "bert",
+  "num_attention_heads": 12,
+  "num_beams": 1,
+  "num_hidden_layers": 12,
+  "num_labels": 6,
+  "num_return_sequences": 1,
+  "output_attentions": false,
+  "output_hidden_states": false,
+  "output_past": true,
+  "pad_token_id": 0,
+  "pruned_heads": {},
+  "repetition_penalty": 1.0,
+  "temperature": 1.0,
+  "top_k": 50,
+  "top_p": 1.0,
+  "torchscript": false,
+  "type_vocab_size": 2,
+  "use_bfloat16": false,
+  "vocab_size": 30522
+}
+
+I1115 13:09:37.683054 47103795899072 modeling_utils.py:461] loading weights file https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-pytorch_model.bin from cache at /home/u00461/.cache/torch/transformers/aa1ef1aede4482d0dbcd4d52baad8ae300e60902e88fcb0bebdec09afd232066.36ca03ab34a1a5d5fa7bc3d03d55c4fa650fed07220e2eeebc06ce58d0e9a157
+I1115 13:09:42.156044 47103795899072 modeling_utils.py:546] Weights of BertForSequenceClassification not initialized from pretrained model: ['classifier.bias', 'classifier.weight']
+I1115 13:09:42.156321 47103795899072 modeling_utils.py:552] Weights from pretrained model not used in BertForSequenceClassification: ['cls.predictions.bias', 'cls.predictions.transform.dense.weight', 'cls.predictions.transform.dense.bias', 'cls.predictions.decoder.weight', 'cls.seq_relationship.weight', 'cls.seq_relationship.bias', 'cls.predictions.transform.LayerNorm.weight', 'cls.predictions.transform.LayerNorm.bias']
+/pytorch/torch/csrc/utils/python_arg_parser.cpp:756: UserWarning: This overload of add_ is deprecated:
+	add_(Number alpha, Tensor other)
+Consider using one of the following signatures instead:
+	add_(Tensor other, *, Number alpha)
+I1115 13:16:55.030556 47103795899072 configuration_utils.py:118] Configuration saved in working2/model/config.json
+I1115 13:16:56.050112 47103795899072 modeling_utils.py:298] Model weights saved in working2/model/pytorch_model.bin
+/home/u00461/.local/lib/python3.5/site-packages/sklearn/metrics/_classification.py:1272: UndefinedMetricWarning: Precision and F-score are ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+/home/u00461/.local/lib/python3.5/site-packages/sklearn/metrics/_classification.py:1272: UndefinedMetricWarning: Recall and F-score are ill-defined and being set to 0.0 in labels with no true samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+I1115 13:24:16.996891 47103795899072 configuration_utils.py:118] Configuration saved in working2/model/config.json
+I1115 13:24:17.605637 47103795899072 modeling_utils.py:298] Model weights saved in working2/model/pytorch_model.bin
+I1115 13:31:38.265138 47103795899072 configuration_utils.py:118] Configuration saved in working2/model/config.json
+I1115 13:31:38.591121 47103795899072 modeling_utils.py:298] Model weights saved in working2/model/pytorch_model.bin
+HBox(children=(HTML(value='Epoch'), FloatProgress(value=0.0, max=3.0), HTML(value='')))
+<======================Epoch {_} ======================>
+
+	Current Learning rate:  1.3333333333333332e-06
+
+	Average Training loss:  1.0740005004998845
+
+	Validation Accuracy:  0.7584325396825397
+
+	Validation MCC Accuracy:  0.6775326369238549
+              precision    recall  f1-score   support
+
+       anger   1.000000  1.000000  1.000000         1
+        fear   1.000000  1.000000  1.000000         1
+         joy   0.750000  1.000000  0.857143         6
+        love   0.000000  0.000000  0.000000         2
+     sadness   1.000000  1.000000  1.000000         6
+    surprise   0.000000  0.000000  0.000000         0
+
+   micro avg   0.875000  0.875000  0.875000        16
+   macro avg   0.625000  0.666667  0.642857        16
+weighted avg   0.781250  0.875000  0.821429        16
+
+<======================Epoch {_} ======================>
+
+	Current Learning rate:  6.666666666666666e-07
+
+	Average Training loss:  0.623925631200865
+
+	Validation Accuracy:  0.8263888888888888
+
+	Validation MCC Accuracy:  0.7699933462090661
+              precision    recall  f1-score   support
+
+       anger   0.000000  0.000000  0.000000         1
+        fear   0.500000  0.500000  0.500000         2
+         joy   0.888889  0.888889  0.888889         9
+        love   0.000000  0.000000  0.000000         1
+     sadness   0.400000  1.000000  0.571429         2
+    surprise   0.000000  0.000000  0.000000         1
+
+    accuracy                       0.687500        16
+   macro avg   0.298148  0.398148  0.326720        16
+weighted avg   0.612500  0.687500  0.633929        16
+
+<======================Epoch {_} ======================>
+
+	Current Learning rate:  0.0
+
+	Average Training loss:  0.4965856789907384
+
+	Validation Accuracy:  0.8487103174603174
+
+	Validation MCC Accuracy:  0.8017582864263783
+              precision    recall  f1-score   support
+
+       anger   1.000000  0.750000  0.857143         4
+        fear   1.000000  1.000000  1.000000         3
+         joy   0.800000  1.000000  0.888889         4
+        love   1.000000  0.500000  0.666667         2
+     sadness   0.750000  1.000000  0.857143         3
+    surprise   0.000000  0.000000  0.000000         0
+
+   micro avg   0.875000  0.875000  0.875000        16
+   macro avg   0.758333  0.708333  0.711640        16
+weighted avg   0.903125  0.875000  0.868056        16
+
+
+train finished

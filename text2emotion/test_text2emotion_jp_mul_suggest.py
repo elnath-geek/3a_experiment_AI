@@ -66,12 +66,12 @@ def main():
     model.zero_grad()
     model.eval()
     # model.load_state_dict(torch.load("working_16000/model/fineTuneModel.pt"))
-    model.load_state_dict(torch.load("working_ep5/model/fineTuneModel.pt"))
+    model.load_state_dict(torch.load("working_16000/model/fineTuneModel.pt"))
 
     with torch.no_grad():
         output = model(t_input_id, token_type_ids=None, attention_mask=t_attention_mask)
         output = output[0].to('cpu').numpy()
-        output = np.vectorize(normalize)(np.array(output))
+        #output = np.vectorize(normalize)(np.array(output))
         print('ja_sentence', ja_sentence)
         print('en_sentence', en_sentence)
         print('  anger,      fear,      joy,       love,      sadness,   surprise')
