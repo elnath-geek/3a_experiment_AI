@@ -11,7 +11,6 @@ G5：山本 恒輔、坂本 祐輝、荒木 航太
 |node | 12.15.0|他のバージョンは動作非検証です。アプリ自体をnuxtで作成しており、Node実行環境が必要です。|
 |pytorch | 1.5.0 or 1.5.1|1.4.0以下ではモデルの読み込みでエラーがでると思います。|
 |transformers| 3.4.0 / 2.5.1| 感情ベクトル6次元なら3.4.0、neutralを含めたコードはモデルの関係で2系（istに合わせて2.5.1推奨）でしか動作しませんでした。 |
-|フォント| - | web/assets/fonts/ からインストールしないと反映されません。|
 |その他|enviroment/pip_list_output.txt|必要に応じてpip install, npm install をお願いします。|
 
 学習モデルは容量の関係でgithubに上がらなかったので、手元で学習させるか、以下のググドラリンク（https://drive.google.com/drive/folders/184SoXCuATJA3eZ7HBhU2H79m-Lc8_KFY?usp=sharing）からダウンロードして、  
