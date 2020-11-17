@@ -25,7 +25,10 @@ def suggest(emotions, k=3):
 def main():
     device = torch.device("cpu")
     en_sentence = sys.stdin.readline()
-    en_split_sentence = np.array(re.findall(".*?[.!?]", en_sentence))
+    en_split_sentence = re.findall(".*?[.!?]", en_sentence)
+    if len(en_split_sentence) == 0:
+      en_split_sentence = [en_sentence]
+    en_split_sentence = np.array(en_split_sentence)
     # print("python-shell", type(en_split_sentence))
     # print("python-shell", en_split_sentence)
 
