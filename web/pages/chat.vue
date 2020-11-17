@@ -217,7 +217,7 @@ export default {
                         });
       this.getMessages()
       console.log('mounted')
-      this.setTimer(10000);
+      this.setTimer(20000);
     }
 }
 </script>
