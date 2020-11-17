@@ -38,7 +38,7 @@
                 </tr>
               </table>
             </div>
-
+            <div>送信から反映まで、10~20秒かかります、送信ボタン連打はお控えください。<br>送信結果は chat の方のページで確認できます。<br>発言に応じて、左上のクラウドマークでふさわしいスタンプをサジェストします。</div>
             <div class="modal fade" id="stampModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="false">
               <div class="modal-dialog" role="document">
               <div class="modal-content">
@@ -217,7 +217,7 @@ export default {
                         });
       this.getMessages()
       console.log('mounted')
-      // this.setTimer(3000);
+      this.setTimer(10000);
     }
 }
 </script>
