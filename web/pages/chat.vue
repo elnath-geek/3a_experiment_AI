@@ -203,9 +203,6 @@ export default {
         setTimer(intervalTime) {
             var self = this;
             this.intervalID = setInterval(function(){self.getMessages()}, intervalTime);
-        },
-        beforeDestroy() {
-          clearInterval(this.intervalID);
         }
     },
     mounted() {
@@ -218,6 +215,9 @@ export default {
       this.getMessages()
       console.log('mounted')
       this.setTimer(20000);
+    },
+    beforeDestroy() {
+      clearInterval(this.intervalID);
     }
 }
 </script>
